@@ -16,14 +16,6 @@ class RecyclerCardAdapter(private val listener: Listener, context: Context) :Rec
     private val selectedViews = mutableListOf<CardViewHolder>()
     private val repository = CardRepository()
 
-    /*private val mocking = listOf(
-        AdapterCard("1", "${context.filesDir}/sample1.png"),
-        AdapterCard("2", "${context.filesDir}/sample2.jpg"),
-        AdapterCard("3", "${context.filesDir}/sample3.jpg"),
-        AdapterCard("4", "${context.filesDir}/sample1.png"),
-        AdapterCard("5", "${context.filesDir}/sample2.jpg")
-        )*/
-
     private var cardList :List<AdapterCard> = repository.getAdapterCards()
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
