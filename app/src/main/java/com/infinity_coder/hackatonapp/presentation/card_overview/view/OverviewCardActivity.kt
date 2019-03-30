@@ -48,11 +48,11 @@ class OverviewCardActivity: AppCompatActivity() {
         }
         else if(card is FuelCard){
             tvHolderName.visibility = GONE
-            if(card.validThru.toString().isEmpty())
+            if(card.validThru.isEmpty())
                 tvDate.visibility = GONE
             else {
                 tvDate.visibility = VISIBLE
-                tvDate.text = card.validThru.toString()
+                tvDate.text = card.validThru
             }
             if(card.number.isEmpty())
                 tvBankNumber.visibility = GONE

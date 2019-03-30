@@ -27,7 +27,7 @@ class FuelEditCardActivity: AppCompatActivity() {
 
         tv_bank_card_number.setText(card.number)
         tv_card_number.setText(card.subNumber)
-        tv_expiring_date.setText(card.validThru.toString())
+        tv_expiring_date.setText(card.validThru)
 
         fabCapturePhoto.setOnClickListener {
             startActivity(Intent(this, ScanActivity::class.java))
