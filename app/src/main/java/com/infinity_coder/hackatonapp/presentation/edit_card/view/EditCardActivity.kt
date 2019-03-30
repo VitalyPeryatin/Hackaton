@@ -122,7 +122,7 @@ class EditCardActivity: AppCompatActivity() {
         for (i in blocks.indices) {
             val lines = blocks[i].lines
             for (j in lines.indices) {
-                if (lines[j].text.replace(" ", "").matches(regexFuelCardName)) {
+                if (lines[j].text.matches(regexFuelCardName)) {
                     cardNumber = (lines[j].text)
                 }
                 if (lines[j].text.matches(regexHolderName)) {
