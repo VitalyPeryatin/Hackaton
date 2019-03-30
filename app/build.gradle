@@ -66,4 +66,10 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+
+    //CameraView
+    implementation 'com.otaliastudios:cameraview:2.0.0-beta04'
+    implementation 'com.google.android.material:material:1.1.0-alpha04'
+    implementation "androidx.exifinterface:exifinterface:1.0.0"
+    implementation "com.google.errorprone:error_prone_annotations:2.0.18"
 }
