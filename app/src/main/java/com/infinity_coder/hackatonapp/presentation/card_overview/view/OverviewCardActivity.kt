@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.infinity_coder.hackatonapp.IMAGE_PATH_KEY
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.SCAN_REQUEST_CODE
+import com.infinity_coder.hackatonapp.presentation.edit_card.view.EditCardActivity
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_overview_card.*
