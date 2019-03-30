@@ -35,7 +35,6 @@
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:ems="10"
                     android:id="@+id/tv_holder_name"/>
             <TextView
@@ -45,7 +44,6 @@
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:ems="10"
                     android:id="@+id/tv_bank_card_number"/>
             <TextView
@@ -55,9 +53,17 @@
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:ems="10"
                     android:id="@+id/tv_expiring_date"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/etCompany"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:id="@+id/etCompany"/>
         </LinearLayout>
 
     </ScrollView>

@@ -8,10 +8,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.infinity_coder.hackatonapp.IMAGE_PATH_KEY
 import com.infinity_coder.hackatonapp.R
-import com.otaliastudios.cameraview.Audio
-import com.otaliastudios.cameraview.CameraListener
-import com.otaliastudios.cameraview.Mode
-import com.otaliastudios.cameraview.PictureResult
+import com.otaliastudios.cameraview.*
 import kotlinx.android.synthetic.main.activity_scan.*
 import java.io.FileOutputStream
 import java.util.*
@@ -40,7 +37,7 @@ class ScanActivity : AppCompatActivity() {
 
         setCameraView()
         fabCamera.setOnClickListener {
-            cameraView.takePictureSnapshot()
+            cameraView.takePicture()
         }
     }
 
@@ -48,6 +45,7 @@ class ScanActivity : AppCompatActivity() {
         cameraView.setLifecycleOwner(this)
         cameraView.mode = Mode.PICTURE
         cameraView.audio = Audio.OFF
+        cameraView.flash = Flash.OFF
         cameraView.addCameraListener(cameraListener)
     }
 

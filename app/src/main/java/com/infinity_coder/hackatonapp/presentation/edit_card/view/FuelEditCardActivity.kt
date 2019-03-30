@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
@@ -28,6 +29,7 @@ class FuelEditCardActivity: AppCompatActivity() {
         tv_bank_card_number.setText(card.number)
         tv_card_number.setText(card.subNumber)
         tv_expiring_date.setText(card.validThru)
+        findViewById<EditText>(R.id.etCompany).setText(card.company)
 
         fabCapturePhoto.setOnClickListener {
             startActivity(Intent(this, ScanActivity::class.java))

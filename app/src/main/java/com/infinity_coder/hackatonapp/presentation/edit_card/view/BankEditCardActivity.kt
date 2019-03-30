@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
@@ -39,6 +41,7 @@ class BankEditCardActivity: AppCompatActivity() {
         tv_bank_card_number.setText(card.number)
         tv_holder_name.setText("${card.name} ${card.surName}")
         tv_expiring_date.setText(card.validThru)
+        findViewById<EditText>(R.id.etCompany).setText(card.company)
     }
 
     fun validateFields() {
