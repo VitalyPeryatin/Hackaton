@@ -20,13 +20,14 @@ class MainActivity : AppCompatActivity(), RecyclerCardAdapter.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         recyclerCards.layoutManager = GridLayoutManager(this,2)
 
         recyclerCards.adapter = RecyclerCardAdapter(this, this)
 
 
         fabAdd.setOnClickListener{
-            startActivity(Intent(this, ScanActivity::class.java))
+            startActivity(Intent(this, OverviewCardActivity::class.java))
 
         }
     }
