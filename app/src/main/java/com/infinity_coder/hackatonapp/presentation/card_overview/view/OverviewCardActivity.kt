@@ -12,7 +12,9 @@ import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_overview_card.*
+import java.io.File
 
 
 class OverviewCardActivity: AppCompatActivity() {
@@ -24,6 +26,10 @@ class OverviewCardActivity: AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val card = TempRepository.card
+
+        Picasso.get()
+            .load(File(card.path))
+            .into(imageView)
 
         if(card is BankCard){
             tvNumber.visibility = GONE

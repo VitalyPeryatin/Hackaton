@@ -37,7 +37,7 @@ class ScanActivity : AppCompatActivity() {
 
         setCameraView()
         fabCamera.setOnClickListener {
-            cameraView.takePicture()
+            cameraView.takePictureSnapshot()
         }
     }
 

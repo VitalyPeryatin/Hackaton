@@ -24,6 +24,7 @@ class EditCardActivity: AppCompatActivity() {
     var holderName = ""
     var bankCardNumber = ""
     var expiringDate = ""
+    var imagePath = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class EditCardActivity: AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SCAN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val imagePath = data?.getStringExtra(IMAGE_PATH_KEY)
+            imagePath = data?.getStringExtra(IMAGE_PATH_KEY)!!
             val options = BitmapFactory.Options()
             options.inPreferredConfig = Bitmap.Config.ARGB_8888
             val bitmap = BitmapFactory.decodeFile(imagePath, options)
@@ -154,10 +155,10 @@ class EditCardActivity: AppCompatActivity() {
         }
 
         if (holderName != ""){
-            TempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
+            TempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1], imagePath)
         }
         else{
-            TempRepository.card = FuelCard(cardNumber, expiringDate, "")
+            TempRepository.card = FuelCard(cardNumber, expiringDate, "", imagePath)
         }
         val intent = if(TempRepository.card is BankCard)
             Intent(this, BankEditCardActivity::class.java)

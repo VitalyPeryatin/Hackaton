@@ -4,7 +4,7 @@ import androidx.room.Entity
 
 @Entity(tableName = "bankCards")
 class BankCard(number: String = "", validThru: String = "",
-               company: String = "", val name: String = "", val surName: String = "", path: String = "") :
+               company: String = "", var name: String = "", var surName: String = "", path: String = "") :
     AbstractCard(number, validThru, company, path)
 
 /*data class MonthYear(val month: Int, val year: Int){

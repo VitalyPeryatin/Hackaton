@@ -68,6 +68,11 @@ class BankEditCardActivity: AppCompatActivity() {
             R.id.accept -> {
                 validateFields()
                 if(errorStack.isEmpty()){
+                    card.number = tv_bank_card_number.text.toString()
+                    card.validThru = tv_expiring_date.text.toString()
+                    card.company = etCompany.text.toString()
+                    card.name = tv_holder_name.text.toString()
+
                     cardRepository.insert(card)
                     startActivity(Intent(this, OverviewCardActivity::class.java))
                 }

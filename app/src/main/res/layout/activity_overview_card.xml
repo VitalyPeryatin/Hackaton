@@ -15,20 +15,25 @@
             app:layout_constraintTop_toTopOf="parent"
     />
 
-    <com.infinity_coder.hackatonapp.presentation.custom_ui.CardView
+    <com.infinity_coder.hackatonapp.presentation.custom_ui.MyCardView
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
+            android:id="@+id/cardImageOverview"
+            android:layout_marginTop="8dp"
+            android:layout_margin="8dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp"
-            android:id="@+id/cardImageOverview" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/toolbarOverview" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_margin="8dp">
+            app:layout_constraintTop_toBottomOf="@id/toolbarOverview"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
         <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" app:srcCompat="@android:color/holo_blue_light"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 android:id="@+id/imageView"/>
-    </com.infinity_coder.hackatonapp.presentation.custom_ui.CardView>
+    </com.infinity_coder.hackatonapp.presentation.custom_ui.MyCardView>
     <TextView
             android:hint="Номер карты"
             android:layout_width="match_parent"
