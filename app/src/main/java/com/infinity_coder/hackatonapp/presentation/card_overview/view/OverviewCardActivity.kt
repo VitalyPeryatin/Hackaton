@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_overview_card.*
 import java.io.File
 
+
 class OverviewCardActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

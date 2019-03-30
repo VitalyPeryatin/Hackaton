@@ -1,13 +1,14 @@
-package com.infinity_coder.hackatonapp
+package com.infinity_coder.hackatonapp.presentation.main.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity_coder.hackatonapp.R
+import com.infinity_coder.hackatonapp.data.db.entity.AdapterCard
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_mycard.view.*
-import java.io.File
 
 
 class RecyclerCardAdapter(private val listener: Listener, context: Context) :RecyclerView.Adapter<RecyclerCardAdapter.CardViewHolder>() {
@@ -38,14 +39,14 @@ class RecyclerCardAdapter(private val listener: Listener, context: Context) :Rec
 
 
     interface Listener{
-        fun onClick(id: String)
+        fun onClick(number: String)
     }
 
     inner class CardViewHolder(view: View, private val listener: Listener) : RecyclerView.ViewHolder(view){
         val image = view.imageCard!!
 
         init{
-            view.setOnClickListener{listener.onClick(cardList[layoutPosition].id)}
+            view.setOnClickListener{listener.onClick(cardList[layoutPosition].number)}
 
         }
 

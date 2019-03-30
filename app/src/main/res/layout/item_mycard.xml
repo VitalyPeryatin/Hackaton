@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.infinity_coder.hackatonapp.custom_ui.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="wrap_content" app:cardCornerRadius="5dp"
-                                                   android:layout_margin="2dp"
-                                                   app:cardElevation="5dp">
+<com.infinity_coder.hackatonapp.presentation.custom_ui.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                                xmlns:tools="http://schemas.android.com/tools"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content" app:cardCornerRadius="5dp"
+                                                                android:layout_margin="2dp"
+                                                                app:cardElevation="5dp">
 
     <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content" tools:srcCompat="@tools:sample/backgrounds/scenic"
             android:id="@+id/imageCard" android:contentDescription="@string/descriptionCard"/>
-</com.infinity_coder.hackatonapp.custom_ui.CardView>
+</com.infinity_coder.hackatonapp.presentation.custom_ui.CardView>

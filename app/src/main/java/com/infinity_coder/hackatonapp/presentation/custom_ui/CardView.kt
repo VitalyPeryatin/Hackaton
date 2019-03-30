@@ -1,4 +1,4 @@
-package com.infinity_coder.hackatonapp.custom_ui
+package com.infinity_coder.hackatonapp.presentation.custom_ui
 
 import android.content.Context
 import android.util.AttributeSet
