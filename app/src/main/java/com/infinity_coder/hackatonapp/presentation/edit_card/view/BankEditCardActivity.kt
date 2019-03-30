@@ -48,7 +48,7 @@ class BankEditCardActivity: AppCompatActivity() {
         cardRepository.insert(card)
     }
 
-    fun validateFields() {
+    private fun validateFields() {
 
         if(!tv_bank_card_number.text.toString().matches(regexBankCardName)) errorStack += "Неправильно введён номер карты\n\n"
         if(!tv_holder_name.text.toString().matches(regexHolderName)) errorStack += "Неправильно введено имя держателя карты\n\n"
