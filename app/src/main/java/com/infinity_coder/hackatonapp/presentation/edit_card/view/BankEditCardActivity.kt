@@ -5,13 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
-import com.infinity_coder.hackatonapp.data.repository.CardRepository
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
-import com.infinity_coder.hackatonapp.domain.ICardRepository
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import com.infinity_coder.hackatonapp.regexBankCardName
@@ -20,9 +19,9 @@ import com.infinity_coder.hackatonapp.regexHolderName
 import kotlinx.android.synthetic.main.activity_edit_bank_card.*
 
 class BankEditCardActivity: AppCompatActivity() {
+
     var errorStack = ""
 
-    lateinit var cardRepository: ICardRepository
     lateinit var card: BankCard
 
     @SuppressLint("SetTextI18n")
@@ -33,7 +32,6 @@ class BankEditCardActivity: AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_close)
 
-        cardRepository = CardRepository()
         card = TempRepository.card as BankCard
 
         fabCapturePhoto.setOnClickListener {
@@ -43,6 +41,7 @@ class BankEditCardActivity: AppCompatActivity() {
         tv_bank_card_number.setText(card.number)
         tv_holder_name.setText("${card.name} ${card.surName}")
         tv_expiring_date.setText(card.validThru)
+        findViewById<EditText>(R.id.etCompany).setText(card.company)
     }
 
     fun validateFields() {
@@ -64,11 +63,9 @@ class BankEditCardActivity: AppCompatActivity() {
             }
             R.id.accept -> {
                 validateFields()
-                if(errorStack.isEmpty()){
-                    cardRepository.insert(card)
-                    startActivity(Intent(this, OverviewCardActivity::class.java))
-                }
+                if(errorStack.isEmpty()) startActivity(Intent(this, OverviewCardActivity::class.java))
                 else showError(errorStack); errorStack = ""
+
             }
         }
         return true
