@@ -147,7 +147,6 @@ class EditCardActivity: AppCompatActivity() {
                     }
                 }
             }
-
             if (holderName != ""){
                 tempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
             }
