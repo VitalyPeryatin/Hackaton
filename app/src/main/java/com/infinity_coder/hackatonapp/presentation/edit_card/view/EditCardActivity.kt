@@ -112,11 +112,14 @@ class EditCardActivity: AppCompatActivity() {
                 processCloudTextRecognitionResult(texts)
             }
             .addOnFailureListener { e ->
+                showToast("Bank card not recognized!")
                 e.printStackTrace()
+                finish()
             }
     }
 
     private fun processCloudTextRecognitionResult(text: FirebaseVisionText) {
+
 
         val blocks = text.textBlocks
         for (i in blocks.indices) {
