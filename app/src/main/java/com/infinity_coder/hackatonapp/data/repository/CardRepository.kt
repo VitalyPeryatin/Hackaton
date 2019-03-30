@@ -56,10 +56,9 @@ class CardRepository : ICardRepository {
         return cardDao.getFuelCards(company)
     }
 
-    override fun getAdapterCards(): List<AdapterCard>{
+    override fun getAdapterCards(): List<AdapterCard> = runBlocking (Dispatchers.IO){
         val items = mutableListOf<AbstractCard>()
         val adapterItems = mutableListOf<AdapterCard>()
-        runBlocking {
             val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
                 cardDao.getBankCards()
             }
@@ -67,9 +66,10 @@ class CardRepository : ICardRepository {
                 cardDao.getFuelCards()
             }
             items.addAll(asyncBankCards.await().value!!)
-            items.addAll(asyncFuelCards.await().value!!) }
+
+            items.addAll(asyncFuelCards.await().value!!)
         items.map { adapterItems.add(AdapterCard(it.number, it.path)) }
-        return adapterItems
+        return@runBlocking adapterItems
     }
 
     object temp{

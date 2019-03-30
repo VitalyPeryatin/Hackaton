@@ -43,7 +43,6 @@ class BankEditCardActivity: AppCompatActivity() {
         tv_bank_card_number.setText(card.number)
         tv_holder_name.setText("${card.name} ${card.surName}")
         tv_expiring_date.setText(card.validThru)
-        cardRepository.insert(card)
     }
 
     fun validateFields() {
