@@ -1,10 +1,9 @@
 package com.infinity_coder.hackatonapp.data.db.entity
 
 import androidx.room.Entity
-import java.util.*
 
 @Entity(tableName = "bankCards")
-class BankCard(number: String = "", validThru: Date = Date(),
+class BankCard(number: String = "", validThru: String = "",
                company: String = "", val name: String = "", val surName: String = "", path: String = "") :
     AbstractCard(number, validThru, company, path)
 
