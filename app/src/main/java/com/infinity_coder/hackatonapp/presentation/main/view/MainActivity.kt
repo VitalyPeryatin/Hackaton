@@ -1,7 +1,8 @@
-package com.infinity_coder.hackatonapp
+package com.infinity_coder.hackatonapp.presentation.main.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.infinity_coder.hackatonapp.R
 
 class MainActivity : AppCompatActivity() {
 

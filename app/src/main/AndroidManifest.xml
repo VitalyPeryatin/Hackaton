@@ -10,8 +10,13 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+            tools:ignore="GoogleAppIndexingWarning"
+            android:fullBackupContent="">
+        <activity android:name=".presentation.main.view.MainActivity">
+
+        </activity>
+        <activity android:name=".presentation.scan.view.ScanActivity"/>
+        <activity android:name=".presentation.card_overview.view.OverviewCardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
