@@ -6,9 +6,11 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.infinity_coder.hackatonapp.IMAGE_PATH_KEY
 import com.infinity_coder.hackatonapp.R
+import com.infinity_coder.hackatonapp.presentation.edit_card.view.EditCardActivity
 import com.otaliastudios.cameraview.Audio
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.Mode
@@ -39,18 +41,10 @@ class ScanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan)
 
-        setSupportActionBar(toolbar)
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-
         setCameraView()
         fabCamera.setOnClickListener {
             cameraView.takePictureSnapshot()
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
-        return true
     }
 
     private fun setCameraView(){
