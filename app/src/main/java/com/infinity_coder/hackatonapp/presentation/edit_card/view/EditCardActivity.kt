@@ -9,19 +9,18 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions
 import com.google.firebase.ml.vision.text.FirebaseVisionText
 import com.infinity_coder.hackatonapp.*
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
-import java.util.*
 
-class EditCardActivity: AppCompatActivity() {
-    /*val tempRepository = TempRepository*/
+class EditCardActivity : AppCompatActivity() {
+    val tempRepository = TempRepository
     var cardNumber = ""
     var holderName = ""
     var bankCardNumber = ""
@@ -31,7 +30,8 @@ class EditCardActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_processing)
+        setContentView(R.layout.activity_edit_card)
+        navigateTo(ProcessingFragment())
         startActivityForResult(
             Intent(this, ScanActivity::class.java),
             SCAN_REQUEST_CODE
@@ -45,7 +45,6 @@ class EditCardActivity: AppCompatActivity() {
             val options = BitmapFactory.Options()
             options.inPreferredConfig = Bitmap.Config.ARGB_8888
             val bitmap = BitmapFactory.decodeFile(imagePath, options)
-
 
             if (isNetworkConnected()) {
                 runCloudTextRecognition(bitmap)
@@ -78,7 +77,6 @@ class EditCardActivity: AppCompatActivity() {
 
     private fun processTextRecognitionResult(texts: FirebaseVisionText) {
         val blocks = texts.textBlocks
-
         for (i in blocks.indices) {
             val lines = blocks[i].lines
             for (j in lines.indices) {
@@ -106,25 +104,30 @@ class EditCardActivity: AppCompatActivity() {
                 }
             }
         }
-      /*  if (holderName != ""){
-            tempRepository.card = BankCard(cardNumber, expiringDate, company, holderName, imagePath)
+        if (holderName != ""){
+            tempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
         }
         else{
-            tempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)
-        }*/
+            tempRepository.card = FuelCard(cardNumber, expiringDate, "")
+        }
 
         if (holderName != "") {
             TempRepository.card =
-                BankCard(cardNumber, expiringDate, company, holderName, imagePath)
+                BankCard(cardNumber, expiringDate, company, holderName, "", imagePath)
         } else {
             TempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)
         }
-        val intent = if (TempRepository.card is BankCard)
-            Intent(this, BankEditCardActivity::class.java)
+        if (TempRepository.card is BankCard)
+            navigateTo(BankEditCardFragment())
         else
-            Intent(this, FuelEditCardActivity::class.java)
-        startActivity(intent)
-        finish()
+            navigateTo(FuelEditCardFragment())
+
+    }
+
+    private fun navigateTo(fragment: Fragment){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, fragment)
+            .commit()
     }
 
     private fun runCloudTextRecognition(mSelectedImage: Bitmap) {
@@ -136,8 +139,8 @@ class EditCardActivity: AppCompatActivity() {
                 processCloudTextRecognitionResult(texts)
             }
             .addOnFailureListener { e ->
-                showToast("Bank card not recognized!")
                 e.printStackTrace()
+                showToast("Bank card not recognized!")
                 finish()
             }
     }
@@ -172,18 +175,17 @@ class EditCardActivity: AppCompatActivity() {
             }
         }
 
-        if (holderName != "") {
-            TempRepository.card =
-                BankCard(bankCardNumber, expiringDate, company, holderName.split(" ")[0], holderName.split(" ")[1])
-        } else {
-            TempRepository.card = FuelCard(cardNumber, expiringDate, "")
+        if (holderName != ""){
+            TempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1], imagePath)
         }
-        val intent = if (TempRepository.card is BankCard)
-            Intent(this, BankEditCardActivity::class.java)
+        else{
+            TempRepository.card = FuelCard(cardNumber, expiringDate, "", imagePath)
+        }
+
+        if (TempRepository.card is BankCard)
+            navigateTo(BankEditCardFragment())
         else
-            Intent(this, FuelEditCardActivity::class.java)
-        startActivity(intent)
-        finish()
+            navigateTo(FuelEditCardFragment())
     }
 
     private fun isNetworkConnected(): Boolean {

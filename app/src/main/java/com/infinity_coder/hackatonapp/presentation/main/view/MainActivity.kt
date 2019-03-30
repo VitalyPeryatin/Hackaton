@@ -24,10 +24,8 @@ class MainActivity : AppCompatActivity(), RecyclerCardAdapter.Listener {
 
         recyclerCards.adapter = RecyclerCardAdapter(this, this)
 
-
         fabAdd.setOnClickListener{
             startActivity(Intent(this, EditCardActivity::class.java))
-
         }
     }
 
