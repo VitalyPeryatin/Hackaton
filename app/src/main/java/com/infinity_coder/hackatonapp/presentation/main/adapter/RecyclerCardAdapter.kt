@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.item_mycard.view.*
 
 
 class RecyclerCardAdapter(private val listener: Listener, context: Context) :RecyclerView.Adapter<RecyclerCardAdapter.CardViewHolder>() {
+    private val selected = mutableListOf<Int>()
     private val mocking = listOf(
         AdapterCard("1", "${context.filesDir}/sample1.png"),
         AdapterCard("2", "${context.filesDir}/sample2.jpg"),
@@ -27,7 +28,7 @@ class RecyclerCardAdapter(private val listener: Listener, context: Context) :Rec
             .load(cardList[position].path)
             .noFade()
             .into(holder.image)
-
+        holder.itemView.isSelected = !selected.contains(position)
     }
 
     override fun getItemCount(): Int = cardList.size
@@ -44,10 +45,12 @@ class RecyclerCardAdapter(private val listener: Listener, context: Context) :Rec
 
     inner class CardViewHolder(view: View, private val listener: Listener) : RecyclerView.ViewHolder(view){
         val image = view.imageCard!!
-
         init{
             view.setOnClickListener{listener.onClick(cardList[layoutPosition].number)}
-
+            view.setOnLongClickListener{
+                notifyItemChanged(layoutPosition)
+                selected.add(layoutPosition)
+            }
         }
 
     }
