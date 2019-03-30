@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), RecyclerCardAdapter.Listener {
 
 
         fabAdd.setOnClickListener{
-            startActivity(Intent(this, ScanActivity::class.java))
+            startActivity(Intent(this, EditCardActivity::class.java))
 
         }
     }

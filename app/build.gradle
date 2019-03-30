@@ -61,4 +61,12 @@ dependencies {
     implementation "com.google.errorprone:error_prone_annotations:2.0.18"
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "com.google.errorprone:error_prone_annotations:2.2.0"
+
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
+    implementation 'com.google.firebase:firebase-ml-vision-image-label-model:17.0.2'
+    implementation 'com.google.firebase:firebase-ml-vision-face-model:17.0.2'
+    implementation 'com.google.firebase:firebase-ml-model-interpreter:16.2.3'
 }
+apply plugin: 'com.google.gms.google-services'
