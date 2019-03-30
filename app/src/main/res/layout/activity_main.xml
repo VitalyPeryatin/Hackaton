@@ -6,22 +6,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-    <Button
-            android:text="Сканировать изображение"
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:id="@+id/buttonGoScan"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:textColor="@android:color/background_light"
-            android:background="@color/colorAccent"/>
-    <ImageView
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary" app:layout_constraintStart_toStartOf="parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Карты"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+    />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:maxImageSize="36dp"
+            android:clickable="true" app:srcCompat="@drawable/ic_plus"
+            android:id="@+id/fabAdd"
+            app:backgroundTint="@color/colorPrimary" android:focusable="true" android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+    />
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCards"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorPrimary"
-            android:id="@+id/cardImage" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_margin="8dp"/>
+            android:layout_margin="1dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
