@@ -27,11 +27,11 @@ class OverviewCardActivity: AppCompatActivity() {
 
         if(card is BankCard){
             tvNumber.visibility = GONE
-            if(card.validThru.toString().isEmpty())
+            if(card.validThru.isEmpty())
                 tvDate.visibility = GONE
             else {
                 tvDate.visibility = VISIBLE
-                tvDate.text = card.validThru.toString()
+                tvDate.text = card.validThru
             }
             if(card.name.isEmpty() && card.surName.isEmpty())
                 tvHolderName.visibility = GONE
@@ -64,7 +64,7 @@ class OverviewCardActivity: AppCompatActivity() {
                 tvNumber.visibility = GONE
             else {
                 tvNumber.visibility = VISIBLE
-                tvNumber.text = card.number
+                tvNumber.text = card.subNumber
             }
         }
     }

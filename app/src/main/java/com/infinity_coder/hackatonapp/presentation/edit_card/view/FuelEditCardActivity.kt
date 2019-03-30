@@ -47,6 +47,13 @@ class FuelEditCardActivity: AppCompatActivity() {
                 finish()
             }
             R.id.accept -> {
+                card = TempRepository.card as FuelCard
+
+                card.number = tv_bank_card_number.text.toString()
+                card.subNumber = tv_card_number.text.toString()
+                card.validThru = tv_expiring_date.text.toString()
+                card.company = etCompany.text.toString()
+
                 startActivity(Intent(this, OverviewCardActivity::class.java))
             }
         }
