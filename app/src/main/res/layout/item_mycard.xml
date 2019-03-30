@@ -8,8 +8,12 @@
                                                                 android:layout_margin="2dp"
                                                                 app:cardElevation="5dp">
 
-    <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" tools:srcCompat="@tools:sample/backgrounds/scenic"
-            android:id="@+id/imageCard" android:contentDescription="@string/descriptionCard"/>
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imageCard" android:contentDescription="@string/descriptionCard"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
 </com.infinity_coder.hackatonapp.presentation.custom_ui.CardView>
