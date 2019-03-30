@@ -16,11 +16,13 @@ import com.infinity_coder.hackatonapp.IMAGE_PATH_KEY
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.SCAN_REQUEST_CODE
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
+import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
+import java.util.*
 
 class EditCardActivity: AppCompatActivity() {
-
+    val tempRepository = TempRepository
     var cardNumber = ""
     var holderName = ""
     var bankCardNumber = ""
@@ -97,6 +99,14 @@ class EditCardActivity: AppCompatActivity() {
                     }
                 }
             }
+        }
+        if (holderName != ""){
+            val date = GregorianCalendar(expiringDate.split("/")[0].toInt(), expiringDate.split("/")[1].toInt(), 1).time
+            tempRepository.card = BankCard(cardNumber, date, "", holderName.split(" ")[0], holderName.split(" ")[1])
+        }
+        else{
+            val date = GregorianCalendar(expiringDate.split("/")[0].toInt(), expiringDate.split("/")[1].toInt(), 1).time
+            tempRepository.card = FuelCard(cardNumber, date, "")
         }
 
         val intent = Intent(this, BankEditCardActivity::class.java)
