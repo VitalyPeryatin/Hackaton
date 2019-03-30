@@ -19,7 +19,6 @@ import com.infinity_coder.hackatonapp.regexHolderName
 import kotlinx.android.synthetic.main.activity_edit_bank_card.*
 
 class BankEditCardActivity: AppCompatActivity() {
-
     var errorStack = ""
 
     lateinit var card: BankCard
@@ -63,7 +62,10 @@ class BankEditCardActivity: AppCompatActivity() {
             }
             R.id.accept -> {
                 validateFields()
-                if(errorStack.isEmpty()) startActivity(Intent(this, OverviewCardActivity::class.java))
+                if(errorStack.isEmpty()){
+                    TempRepository.card = card
+                    startActivity(Intent(this, OverviewCardActivity::class.java))}
+
                 else showError(errorStack); errorStack = ""
 
             }

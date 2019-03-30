@@ -59,15 +59,17 @@ class CardRepository : ICardRepository {
     override fun getAdapterCards(): List<AdapterCard> = runBlocking (Dispatchers.IO){
         val items = mutableListOf<AbstractCard>()
         val adapterItems = mutableListOf<AdapterCard>()
-            val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-                cardDao.getBankCards()
-            }
-            val asyncFuelCards = GlobalScope.async(Dispatchers.IO) {
-                cardDao.getFuelCards()
-            }
+        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
+            cardDao.getBankCards()
+        }
+        val asyncFuelCards = GlobalScope.async(Dispatchers.IO) {
+            cardDao.getFuelCards()
+        }
+        if(asyncBankCards.await().value != null)
             items.addAll(asyncBankCards.await().value!!)
-
+        if(asyncFuelCards.await().value != null)
             items.addAll(asyncFuelCards.await().value!!)
+
         items.map { adapterItems.add(AdapterCard(it.number, it.path)) }
         return@runBlocking adapterItems
     }
