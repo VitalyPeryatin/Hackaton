@@ -41,5 +41,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:backgroundTint="@color/design_default_color_on_secondary"
             app:srcCompat="@drawable/ic_camera_white"/>
+    <FrameLayout
+            android:layout_width="300dp"
+            android:layout_height="200dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:background="@drawable/card_frame">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
