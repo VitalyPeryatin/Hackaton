@@ -12,6 +12,9 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+
+
         cardDb = Room.databaseBuilder(this, CardDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()

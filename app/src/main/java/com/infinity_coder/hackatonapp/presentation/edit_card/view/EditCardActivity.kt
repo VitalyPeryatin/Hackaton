@@ -19,8 +19,12 @@ import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import java.util.*
+import android.R.attr.process
+import com.zomato.photofilters.SampleFilters
+import com.zomato.photofilters.imageprocessors.Filter
 
-class EditCardActivity: AppCompatActivity() {
+
+class EditCardActivity : AppCompatActivity() {
     val tempRepository = TempRepository
     var cardNumber = ""
     var holderName = ""
@@ -32,6 +36,7 @@ class EditCardActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_processing)
+        System.loadLibrary("NativeImageProcessor")
         startActivityForResult(
             Intent(this, ScanActivity::class.java),
             SCAN_REQUEST_CODE
@@ -44,7 +49,8 @@ class EditCardActivity: AppCompatActivity() {
             imagePath = data?.getStringExtra(IMAGE_PATH_KEY)!!
             val options = BitmapFactory.Options()
             options.inPreferredConfig = Bitmap.Config.ARGB_8888
-            val bitmap = BitmapFactory.decodeFile(imagePath, options)
+            var bitmap = BitmapFactory.decodeFile(imagePath, options)
+            bitmap = imageProcess(bitmap)
 
 
             if (isNetworkConnected()) {
@@ -57,6 +63,12 @@ class EditCardActivity: AppCompatActivity() {
         } else {
             finish()
         }
+    }
+
+    private fun imageProcess(bitmap: Bitmap): Bitmap {
+        val myFilter = SampleFilters.getNightWhisperFilter()
+        val outputImage = myFilter.processFilter(bitmap)
+        return outputImage
     }
 
     private fun showToast(message: String) {
@@ -106,10 +118,10 @@ class EditCardActivity: AppCompatActivity() {
                 }
             }
         }
-        if (holderName != ""){
-            tempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
-        }
-        else{
+        if (holderName != "") {
+            tempRepository.card =
+                BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
+        } else {
             tempRepository.card = FuelCard(cardNumber, expiringDate, "")
         }
 
