@@ -28,7 +28,12 @@ class RecyclerCardAdapter(private val listener: Listener, context: Context) :Rec
             .load(cardList[position].path)
             .noFade()
             .into(holder.image)
-        holder.itemView.isSelected = !selected.contains(position)
+        val isSelected = !selected.contains(position)
+        holder.itemView.isSelected = isSelected
+        if (!isSelected)
+            holder.itemView.setBackgroundColor(holder.itemView.context.resources.getColor(R.color.colorAccent))
+        else
+            holder.itemView.setBackgroundColor(holder.itemView.context.resources.getColor(android.R.color.white))
     }
 
     override fun getItemCount(): Int = cardList.size
@@ -49,7 +54,12 @@ class RecyclerCardAdapter(private val listener: Listener, context: Context) :Rec
             view.setOnClickListener{listener.onClick(cardList[layoutPosition].number)}
             view.setOnLongClickListener{
                 notifyItemChanged(layoutPosition)
-                selected.add(layoutPosition)
+                if (!selected.contains(layoutPosition)) {
+                    selected.add(layoutPosition)
+                }
+                else{
+                    selected.remove(layoutPosition)
+                }
             }
         }
 
