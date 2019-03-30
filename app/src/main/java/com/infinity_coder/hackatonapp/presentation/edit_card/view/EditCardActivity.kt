@@ -9,9 +9,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionText
@@ -20,19 +18,16 @@ import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.SCAN_REQUEST_CODE
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
-import kotlinx.android.synthetic.main.activity_edit_card.*
 
 class EditCardActivity: AppCompatActivity() {
+
+    var cardNumber = ""
+    var holderName = ""
+    var bankCardNumber = ""
+    var expiringDate = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_card)
-        setSupportActionBar(toolbar)
-        toolbar.setNavigationIcon(R.drawable.ic_close)
-
-        fabCapturePhoto.setOnClickListener {
-            startActivity(Intent(this, ScanActivity::class.java))
-        }
-
         startActivityForResult(
             Intent(this, ScanActivity::class.java),
             SCAN_REQUEST_CODE
@@ -100,53 +95,31 @@ class EditCardActivity: AppCompatActivity() {
     }
 
     private fun processTextRecognitionResult(texts: FirebaseVisionText) {
-        var couldRecognizeCardNumber = false
-        var couldRecognizeBankCardNumber = false
-        var couldRecognizeHolderName = false
-        var couldRecognizeExpiringDate = false
         val blocks = texts.textBlocks
-//        mTextView.setText(texts.text)
-        if (blocks.size == 0) {
-//            showToast("No text found")
-            return
-        }
-//        mGraphicOverlay.clear()
+        if (blocks.size == 0) return
+
         for (i in blocks.indices) {
             val lines = blocks[i].lines
             for (j in lines.indices) {
                 val elements = lines[j].elements
-                if (lines[j].text.replace(" ", "").matches("\\d{10}".toRegex())) {
-                    tv_card_number.setText(lines[j].text)
-                    couldRecognizeCardNumber = true
-                }
-                if (lines[j].text.matches("[A-Z]+\\s([A-Z])+".toRegex())) {
-                    tv_holder_name.setText(lines[j].text)
-                    couldRecognizeHolderName = true
-                }
+                if (lines[j].text.replace(" ", "").matches("\\d{10}".toRegex()))
+                    cardNumber = (lines[j].text)
+                if (lines[j].text.matches("[A-Z]+\\s([A-Z])+".toRegex()))
+                    holderName = (lines[j].text)
                 if (lines[j].text.replace(" ", "")
-                        .matches("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$".toRegex())
-                ) {
-                    tv_bank_card_number.setText(lines[j].text)
-                    couldRecognizeBankCardNumber = true
-                }
+                        .matches("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$".toRegex()))
+                    bankCardNumber = (lines[j].text)
                 for (k in elements.indices) {
-//                    val textGraphic = TextGraphic(mGraphicOverlay, elements[k])
-//                    mGraphicOverlay.add(textGraphic)
                     if (elements[k].text.matches(Regex("^\\d{2}\\/\\d{2}$"))) {
-                        tv_expiring_date.setText(elements[k].text)
-                        couldRecognizeExpiringDate = true
+                        expiringDate = (elements[k].text)
                     }
                 }
             }
         }
-        if (!couldRecognizeCardNumber)
-            tv_card_number.setText("Couldn't recognize")
-        if (!couldRecognizeBankCardNumber)
-            tv_bank_card_number.setText("Couldn't recognize")
-        if (!couldRecognizeHolderName)
-            tv_holder_name.setText("Couldn't recognize")
-        if (!couldRecognizeExpiringDate)
-            tv_expiring_date.setText("Couldn't recognize")
+
+        val intent = Intent(this, BankEditCardActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun runCloudTextRecognition(mSelectedImage: Bitmap) {
@@ -156,45 +129,29 @@ class EditCardActivity: AppCompatActivity() {
             .cloudTextRecognizer
         recognizer.processImage(image)
             .addOnSuccessListener { texts ->
-                //                mCloudButton.setEnabled(true)
                 processCloudTextRecognitionResult(texts)
             }
             .addOnFailureListener { e ->
-                // Task failed with an exception
-                //                        mCloudButton.setEnabled(true)
                 e.printStackTrace()
             }
     }
 
-    private fun processCloudTextRecognitionResult(text: FirebaseVisionText?) {
-        var couldRecognizeCardNumber = false
-        var couldRecognizeBankCardNumber = false
-        var couldRecognizeHolderName = false
-        var couldRecognizeExpiringDate = false
-        // Task completed successfully
-        if (text == null) {
-//            showToast("No text found")
-            return
-        }
-//        mGraphicOverlay.clear()
+    private fun processCloudTextRecognitionResult(text: FirebaseVisionText) {
 
         val blocks = text.textBlocks
         for (i in blocks.indices) {
             val lines = blocks[i].lines
             for (j in lines.indices) {
                 if (lines[j].text.replace(" ", "").matches("\\d{10}".toRegex())) {
-                    tv_card_number.setText(lines[j].text)
-                    couldRecognizeCardNumber = true
+                    cardNumber = (lines[j].text)
                 }
                 if (lines[j].text.matches("[A-Z]+\\s([A-Z])+".toRegex())) {
-                    tv_holder_name.setText(lines[j].text)
-                    couldRecognizeHolderName = true
+                    holderName = (lines[j].text)
                 }
                 if (lines[j].text.replace(" ", "")
                         .matches("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$".toRegex())
                 ) {
-                    tv_bank_card_number.setText(lines[j].text)
-                    couldRecognizeBankCardNumber = true
+                    bankCardNumber = (lines[j].text)
                 }
 
                 //                showToast(lines.get(j).getText());
@@ -204,20 +161,17 @@ class EditCardActivity: AppCompatActivity() {
                     //                            words.get(l));
                     //                    mGraphicOverlay.add(cloudDocumentTextGraphic);
                     if (elements[l].text.matches(Regex("^\\d{2}\\/\\d{2}$"))) {
-                        tv_expiring_date.setText(elements[l].text)
-                        couldRecognizeExpiringDate = true
+                        expiringDate = (elements[l].text)
                     }
                 }
             }
         }
-        if (!couldRecognizeCardNumber)
-            tv_card_number.setText("Couldn't recognize")
-        if (!couldRecognizeBankCardNumber)
-            tv_bank_card_number.setText("Couldn't recognize")
-        if (!couldRecognizeHolderName)
-            tv_holder_name.setText("Couldn't recognize")
-        if (!couldRecognizeExpiringDate)
-            tv_expiring_date.setText("Couldn't recognize")
+
+        val intent = Intent(this, BankEditCardActivity::class.java)
+        startActivity(intent)
+        finish()
+
+
     }
 
     private fun isNetworkConnected(): Boolean {
