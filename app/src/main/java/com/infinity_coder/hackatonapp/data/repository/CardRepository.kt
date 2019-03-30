@@ -15,12 +15,20 @@ import kotlinx.coroutines.runBlocking
 class CardRepository : ICardRepository {
     private val cardDao = App.cardDb.cardDao()
 
-    override fun insert(abstractCard: AbstractCard) {
-        return cardDao.insert(abstractCard)
+    override fun insert(bankCard: BankCard) {
+        cardDao.insert(bankCard)
     }
 
-    override fun delete(abstractCard: AbstractCard) {
-        return cardDao.delete(abstractCard)
+    override fun delete(bankCard: BankCard) {
+        cardDao.delete(bankCard)
+    }
+
+    override fun insert(fuelCard: FuelCard) {
+        cardDao.insert(fuelCard)
+    }
+
+    override fun delete(fuelCard: FuelCard) {
+        cardDao.delete(fuelCard)
     }
 
     override fun getBankCards(): LiveData<List<BankCard>> {
@@ -50,7 +58,7 @@ class CardRepository : ICardRepository {
             }
             items.addAll(asyncBankCards.await().value!!)
             items.addAll(asyncFuelCards.await().value!!) }
-        items.map { adapterItems.add(AdapterCard(it.number, it.photo)) }
+        items.map { adapterItems.add(AdapterCard(it.number, it.path)) }
         return adapterItems
     }
 }
