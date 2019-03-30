@@ -38,16 +38,6 @@
                     android:ems="10"
                     android:id="@+id/tv_card_number"/>
             <TextView
-                    android:text="tv_holder_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView2"/>
-            <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:id="@+id/tv_holder_name"/>
-            <TextView
                     android:text="tv_bank_card_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView3"/>
