@@ -148,17 +148,18 @@ class EditCardActivity: AppCompatActivity() {
                     }
                 }
             }
-            if (holderName != ""){
-                tempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
-            }
-            else{
-                tempRepository.card = FuelCard(cardNumber, expiringDate, "")
-            }
         }
 
-        TempRepository.card = BankCard(bankCardNumber)
-
-        val intent = Intent(this, BankEditCardActivity::class.java)
+        if (holderName != ""){
+            TempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
+        }
+        else{
+            TempRepository.card = FuelCard(cardNumber, expiringDate, "")
+        }
+        val intent = if(TempRepository.card is BankCard)
+            Intent(this, BankEditCardActivity::class.java)
+        else
+            Intent(this, FuelEditCardActivity::class.java)
         startActivity(intent)
         finish()
     }
