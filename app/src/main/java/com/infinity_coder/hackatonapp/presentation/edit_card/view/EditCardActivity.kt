@@ -19,8 +19,6 @@ import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
-import java.util.*
-import kotlin.math.exp
 
 class EditCardActivity: AppCompatActivity() {
     val tempRepository = TempRepository
