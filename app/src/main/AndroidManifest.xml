@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools" package="com.infinity_coder.hackatonapp">
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
             android:name=".App"
             android:allowBackup="true"
@@ -13,15 +15,14 @@
             tools:ignore="GoogleAppIndexingWarning"
             android:fullBackupContent="false">
         <activity android:name=".presentation.main.view.MainActivity">
-
-        </activity>
-        <activity android:name=".presentation.scan.view.ScanActivity"/>
-        <activity android:name=".presentation.card_overview.view.OverviewCardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".presentation.scan.view.ScanActivity"/>
+        <activity android:name=".presentation.card_overview.view.OverviewCardActivity">
         </activity>
     </application>
 
