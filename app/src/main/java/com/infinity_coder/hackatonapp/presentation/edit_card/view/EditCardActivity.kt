@@ -6,8 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.ml.vision.FirebaseVision
@@ -16,7 +14,8 @@ import com.google.firebase.ml.vision.text.FirebaseVisionText
 import com.infinity_coder.hackatonapp.IMAGE_PATH_KEY
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.SCAN_REQUEST_CODE
-import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
+import com.infinity_coder.hackatonapp.data.db.entity.BankCard
+import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 
 class EditCardActivity: AppCompatActivity() {
@@ -28,28 +27,11 @@ class EditCardActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_processing)
         startActivityForResult(
             Intent(this, ScanActivity::class.java),
             SCAN_REQUEST_CODE
         )
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_accept, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
-            R.id.accept -> {
-                startActivity(Intent(this, OverviewCardActivity::class.java))
-            }
-        }
-        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -96,7 +78,6 @@ class EditCardActivity: AppCompatActivity() {
 
     private fun processTextRecognitionResult(texts: FirebaseVisionText) {
         val blocks = texts.textBlocks
-        if (blocks.size == 0) return
 
         for (i in blocks.indices) {
             val lines = blocks[i].lines
@@ -167,11 +148,11 @@ class EditCardActivity: AppCompatActivity() {
             }
         }
 
+        TempRepository.card = BankCard(bankCardNumber)
+
         val intent = Intent(this, BankEditCardActivity::class.java)
         startActivity(intent)
         finish()
-
-
     }
 
     private fun isNetworkConnected(): Boolean {

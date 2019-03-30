@@ -61,4 +61,9 @@ class CardRepository : ICardRepository {
         items.map { adapterItems.add(AdapterCard(it.number, it.path)) }
         return adapterItems
     }
+
+    object temp{
+
+
+    }
 }
