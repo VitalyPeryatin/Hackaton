@@ -6,17 +6,28 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.infinity_coder.hackatonapp.R
+import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
+import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import kotlinx.android.synthetic.main.activity_edit_fuel_card.*
 
 class FuelEditCardActivity: AppCompatActivity() {
+
+    lateinit var card: FuelCard
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_fuel_card)
 
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_close)
+
+        card = TempRepository.card as FuelCard
+
+        tv_bank_card_number.setText(card.number)
+        tv_card_number.setText(card.subNumber)
+        tv_expiring_date.setText(card.validThru.toString())
 
         fabCapturePhoto.setOnClickListener {
             startActivity(Intent(this, ScanActivity::class.java))
