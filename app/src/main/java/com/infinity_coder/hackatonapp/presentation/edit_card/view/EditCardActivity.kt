@@ -11,12 +11,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions
 import com.google.firebase.ml.vision.text.FirebaseVisionText
 import com.infinity_coder.hackatonapp.*
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
+import java.util.*
 
 class EditCardActivity: AppCompatActivity() {
     val tempRepository = TempRepository
@@ -24,6 +26,7 @@ class EditCardActivity: AppCompatActivity() {
     var holderName = ""
     var bankCardNumber = ""
     var expiringDate = ""
+    var company = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,15 +65,11 @@ class EditCardActivity: AppCompatActivity() {
         val image = FirebaseVisionImage.fromBitmap(mSelectedImage)
         val recognizer = FirebaseVision.getInstance()
             .onDeviceTextRecognizer
-//        mTextButton.setEnabled(false)
         recognizer.processImage(image)
             .addOnSuccessListener { texts ->
-                //                mTextButton.setEnabled(true)
                 processTextRecognitionResult(texts)
             }
             .addOnFailureListener { e ->
-                // Task failed with an exception
-                //                        mTextButton.setEnabled(true)
                 e.printStackTrace()
             }
     }
@@ -103,10 +102,12 @@ class EditCardActivity: AppCompatActivity() {
     }
 
     private fun runCloudTextRecognition(mSelectedImage: Bitmap) {
-//        mCloudButton.setEnabled(false)
         val image = FirebaseVisionImage.fromBitmap(mSelectedImage)
         val recognizer = FirebaseVision.getInstance()
             .cloudTextRecognizer
+//        val options = FirebaseVisionCloudTextRecognizerOptions.Builder()
+//            .setLanguageHints(Arrays.asList("en", "hi"))
+//            .build()
         recognizer.processImage(image)
             .addOnSuccessListener { texts ->
                 processCloudTextRecognitionResult(texts)
@@ -137,21 +138,21 @@ class EditCardActivity: AppCompatActivity() {
                     bankCardNumber = (lines[j].text)
                 }
 
-                //                showToast(lines.get(j).getText());
                 val elements = lines[j].elements
                 for (l in elements.indices) {
-                    //                    CloudTextGraphic cloudDocumentTextGraphic = new CloudTextGraphic(mGraphicOverlay,
-                    //                            words.get(l));
-                    //                    mGraphicOverlay.add(cloudDocumentTextGraphic);
                     if (elements[l].text.matches(regexDate)) {
                         expiringDate = (elements[l].text)
+                    }
+                    when {
+                        elements[l].text == "VISA" -> company = "Visa"
+                        elements[l].text == "MasterCard" -> company = "MasterCard"
                     }
                 }
             }
         }
 
         if (holderName != ""){
-            TempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
+            TempRepository.card = BankCard(cardNumber, expiringDate, company, holderName.split(" ")[0], holderName.split(" ")[1])
         }
         else{
             TempRepository.card = FuelCard(cardNumber, expiringDate, "")
