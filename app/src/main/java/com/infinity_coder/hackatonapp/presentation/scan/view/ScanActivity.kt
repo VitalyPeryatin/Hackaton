@@ -16,16 +16,23 @@ import kotlinx.android.synthetic.main.activity_scan.*
 import java.io.FileOutputStream
 import java.util.*
 
+
 class ScanActivity : AppCompatActivity() {
 
     private val maxBitmapWidth = 1500
     private val maxBitmapHeight = 1500
+    private var orientation = 0
 
     private val cameraListener = object : CameraListener() {
         override fun onPictureTaken(result: PictureResult) {
             onPicture(result)
         }
+
+        override fun onOrientationChanged(orientation: Int) {
+            this@ScanActivity.orientation = orientation
+        }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,26 +52,20 @@ class ScanActivity : AppCompatActivity() {
 
     private fun onPicture(result: PictureResult) {
         result.toBitmap(maxBitmapWidth, maxBitmapHeight) { bitmap ->
-            if(bitmap != null) {
-                val horizontalBitmap = setHorizontalOrientation(bitmap)
-                val imagePath = saveBitmapToDir(horizontalBitmap, "$filesDir")
+            if (bitmap != null) {
+                val matrix = Matrix()
+                val rotation = if (orientation == 0 || orientation == 180) 0 else 180
+                matrix.postRotate(orientation.toFloat() + rotation)
+                val horizontalBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+                val croppedBmp= Bitmap.createBitmap(horizontalBitmap, (horizontalBitmap.width * 0.1).toInt(), (horizontalBitmap.height * 0.33).toInt(), (horizontalBitmap.width * 0.8).toInt(), (horizontalBitmap.width * 0.5).toInt())
+                val imagePath = saveBitmapToDir(croppedBmp, "$filesDir")
                 val intent = Intent()
                 intent.putExtra(IMAGE_PATH_KEY, imagePath)
                 setResult(Activity.RESULT_OK, intent)
-            }
-            else
+            } else
                 setResult(Activity.RESULT_CANCELED, Intent())
             finish()
         }
-    }
-
-    private fun setHorizontalOrientation(bitmap: Bitmap): Bitmap{
-        val matrix = Matrix()
-        matrix.postRotate(180f)
-        return if(bitmap.width > bitmap.height)
-            Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-        else
-            bitmap
     }
 
   private fun saveBitmapToDir(bitmap: Bitmap?, parentDir: String): String {

@@ -11,7 +11,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning"
-            android:fullBackupContent="">
+            android:fullBackupContent="false">
         <activity android:name=".presentation.main.view.MainActivity">
 
         </activity>
