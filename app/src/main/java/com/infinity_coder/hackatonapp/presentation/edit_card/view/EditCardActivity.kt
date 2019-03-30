@@ -12,9 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionText
-import com.infinity_coder.hackatonapp.IMAGE_PATH_KEY
-import com.infinity_coder.hackatonapp.R
-import com.infinity_coder.hackatonapp.SCAN_REQUEST_CODE
+import com.infinity_coder.hackatonapp.*
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
@@ -39,7 +37,6 @@ class EditCardActivity: AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SCAN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show()
             val imagePath = data?.getStringExtra(IMAGE_PATH_KEY)
             val options = BitmapFactory.Options()
             options.inPreferredConfig = Bitmap.Config.ARGB_8888
@@ -85,15 +82,15 @@ class EditCardActivity: AppCompatActivity() {
             val lines = blocks[i].lines
             for (j in lines.indices) {
                 val elements = lines[j].elements
-                if (lines[j].text.replace(" ", "").matches("\\d{10}".toRegex()))
+                if (lines[j].text.replace(" ", "").matches(regexFuelCardName))
                     cardNumber = (lines[j].text)
-                if (lines[j].text.matches("[A-Z]+\\s([A-Z])+".toRegex()))
+                if (lines[j].text.matches(regexHolderName))
                     holderName = (lines[j].text)
                 if (lines[j].text.replace(" ", "")
-                        .matches("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$".toRegex()))
+                        .matches(regexBankCardName))
                     bankCardNumber = (lines[j].text)
                 for (k in elements.indices) {
-                    if (elements[k].text.matches(Regex("^\\d{2}\\/\\d{2}$"))) {
+                    if (elements[k].text.matches(regexDate)) {
                         expiringDate = (elements[k].text)
                     }
                 }
@@ -131,14 +128,14 @@ class EditCardActivity: AppCompatActivity() {
         for (i in blocks.indices) {
             val lines = blocks[i].lines
             for (j in lines.indices) {
-                if (lines[j].text.replace(" ", "").matches("\\d{10}".toRegex())) {
+                if (lines[j].text.matches(regexFuelCardName)) {
                     cardNumber = (lines[j].text)
                 }
-                if (lines[j].text.matches("[A-Z]+\\s([A-Z])+".toRegex())) {
+                if (lines[j].text.matches(regexHolderName)) {
                     holderName = (lines[j].text)
                 }
                 if (lines[j].text.replace(" ", "")
-                        .matches("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$".toRegex())
+                        .matches(regexBankCardName)
                 ) {
                     bankCardNumber = (lines[j].text)
                 }
@@ -149,7 +146,7 @@ class EditCardActivity: AppCompatActivity() {
                     //                    CloudTextGraphic cloudDocumentTextGraphic = new CloudTextGraphic(mGraphicOverlay,
                     //                            words.get(l));
                     //                    mGraphicOverlay.add(cloudDocumentTextGraphic);
-                    if (elements[l].text.matches(Regex("^\\d{2}\\/\\d{2}$"))) {
+                    if (elements[l].text.matches(regexDate)) {
                         expiringDate = (elements[l].text)
                     }
                 }
