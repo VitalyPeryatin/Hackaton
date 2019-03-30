@@ -21,7 +21,7 @@ import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import java.util.*
 
 class EditCardActivity: AppCompatActivity() {
-    val tempRepository = TempRepository
+    /*val tempRepository = TempRepository*/
     var cardNumber = ""
     var holderName = ""
     var bankCardNumber = ""
@@ -106,18 +106,18 @@ class EditCardActivity: AppCompatActivity() {
                 }
             }
         }
-        if (holderName != ""){
-            tempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
+      /*  if (holderName != ""){
+            tempRepository.card = BankCard(cardNumber, expiringDate, company, holderName, imagePath)
         }
         else{
-            tempRepository.card = FuelCard(cardNumber, expiringDate, "")
-        }
+            tempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)
+        }*/
 
         if (holderName != "") {
             TempRepository.card =
-                BankCard(cardNumber, expiringDate, company, holderName.split(" ")[0], holderName.split(" ")[1])
+                BankCard(cardNumber, expiringDate, company, holderName, imagePath)
         } else {
-            TempRepository.card = FuelCard(cardNumber, expiringDate, "")
+            TempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)
         }
         val intent = if (TempRepository.card is BankCard)
             Intent(this, BankEditCardActivity::class.java)

@@ -34,42 +34,42 @@ class OverviewCardActivity: AppCompatActivity() {
         if(card is BankCard){
             tvNumber.visibility = GONE
             if(card.validThru.isEmpty())
-                tvDate.visibility = GONE
+                tvDateContainer.visibility = GONE
             else {
-                tvDate.visibility = VISIBLE
+                tvDateContainer.visibility = VISIBLE
                 tvDate.text = card.validThru
             }
             if(card.name.isEmpty() && card.surName.isEmpty())
-                tvHolderName.visibility = GONE
+                tvHolderNameContainer.visibility = GONE
             else {
-                tvHolderName.visibility = VISIBLE
+                tvHolderNameContainer.visibility = VISIBLE
                 tvHolderName.text = "${card.name} ${card.surName}"
             }
             if(card.number.isEmpty())
-                tvBankNumber.visibility = GONE
+                tvBankNumberContainer.visibility = GONE
             else {
-                tvBankNumber.visibility = VISIBLE
+                tvBankNumberContainer.visibility = VISIBLE
                 tvBankNumber.text = card.number
             }
         }
         else if(card is FuelCard){
             tvHolderName.visibility = GONE
             if(card.validThru.isEmpty())
-                tvDate.visibility = GONE
+                tvDateContainer.visibility = GONE
             else {
-                tvDate.visibility = VISIBLE
+                tvDateContainer.visibility = VISIBLE
                 tvDate.text = card.validThru
             }
             if(card.number.isEmpty())
-                tvBankNumber.visibility = GONE
+                tvBankNumberContainer.visibility = GONE
             else {
-                tvBankNumber.visibility = VISIBLE
+                tvBankNumberContainer.visibility = VISIBLE
                 tvBankNumber.text = card.number
             }
             if(card.subNumber.toString().isEmpty())
-                tvNumber.visibility = GONE
+                tvNumberContainer.visibility = GONE
             else {
-                tvNumber.visibility = VISIBLE
+                tvNumberContainer.visibility = VISIBLE
                 tvNumber.text = card.subNumber
             }
         }
