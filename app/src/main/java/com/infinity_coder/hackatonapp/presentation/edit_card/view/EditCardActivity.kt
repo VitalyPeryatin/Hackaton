@@ -98,12 +98,11 @@ class EditCardActivity: AppCompatActivity() {
             }
         }
         if (holderName != ""){
-            val date = GregorianCalendar(expiringDate.split("/")[0].toInt(), expiringDate.split("/")[1].toInt(), 1).time
-            tempRepository.card = BankCard(cardNumber, date, "", holderName.split(" ")[0], holderName.split(" ")[1])
+
+            tempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
         }
         else{
-            val date = GregorianCalendar(expiringDate.split("/")[0].toInt(), expiringDate.split("/")[1].toInt(), 1).time
-            tempRepository.card = FuelCard(cardNumber, date, "")
+            tempRepository.card = FuelCard(cardNumber, expiringDate, "")
         }
 
         val intent = Intent(this, BankEditCardActivity::class.java)
