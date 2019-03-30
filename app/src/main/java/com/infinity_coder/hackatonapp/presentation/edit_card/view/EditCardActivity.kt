@@ -20,7 +20,7 @@ import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import java.util.*
 
-class EditCardActivity: AppCompatActivity() {
+class EditCardActivity : AppCompatActivity() {
     val tempRepository = TempRepository
     var cardNumber = ""
     var holderName = ""
@@ -57,6 +57,7 @@ class EditCardActivity: AppCompatActivity() {
             finish()
         }
     }
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
@@ -76,27 +77,44 @@ class EditCardActivity: AppCompatActivity() {
 
     private fun processTextRecognitionResult(texts: FirebaseVisionText) {
         val blocks = texts.textBlocks
-
         for (i in blocks.indices) {
             val lines = blocks[i].lines
             for (j in lines.indices) {
-                val elements = lines[j].elements
-                if (lines[j].text.replace(" ", "").matches(regexFuelCardName))
+                if (lines[j].text.matches(regexFuelCardName)) {
                     cardNumber = (lines[j].text)
-                if (lines[j].text.matches(regexHolderName))
+                }
+                if (lines[j].text.matches(regexHolderName)) {
                     holderName = (lines[j].text)
+                }
                 if (lines[j].text.replace(" ", "")
-                        .matches(regexBankCardName))
+                        .matches(regexBankCardName)
+                ) {
                     bankCardNumber = (lines[j].text)
-                for (k in elements.indices) {
-                    if (elements[k].text.matches(regexDate)) {
-                        expiringDate = (elements[k].text)
+                }
+
+                val elements = lines[j].elements
+                for (l in elements.indices) {
+                    if (elements[l].text.matches(regexDate)) {
+                        expiringDate = (elements[l].text)
+                    }
+                    when {
+                        elements[l].text == "VISA" -> company = "Visa"
+                        elements[l].text == "MasterCard" -> company = "MasterCard"
                     }
                 }
             }
         }
 
-        val intent = Intent(this, BankEditCardActivity::class.java)
+        if (holderName != "") {
+            TempRepository.card =
+                BankCard(cardNumber, expiringDate, company, holderName.split(" ")[0], holderName.split(" ")[1])
+        } else {
+            TempRepository.card = FuelCard(cardNumber, expiringDate, "")
+        }
+        val intent = if (TempRepository.card is BankCard)
+            Intent(this, BankEditCardActivity::class.java)
+        else
+            Intent(this, FuelEditCardActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -132,8 +150,7 @@ class EditCardActivity: AppCompatActivity() {
                 if (lines[j].text.matches(regexHolderName)) {
                     holderName = (lines[j].text)
                 }
-                if (lines[j].text.replace(" ", "")
-                        .matches(regexBankCardName)
+                if (lines[j].text.matches(regexBankCardName)
                 ) {
                     bankCardNumber = (lines[j].text)
                 }
@@ -151,13 +168,13 @@ class EditCardActivity: AppCompatActivity() {
             }
         }
 
-        if (holderName != ""){
-            TempRepository.card = BankCard(cardNumber, expiringDate, company, holderName.split(" ")[0], holderName.split(" ")[1])
-        }
-        else{
+        if (holderName != "") {
+            TempRepository.card =
+                BankCard(bankCardNumber, expiringDate, company, holderName.split(" ")[0], holderName.split(" ")[1])
+        } else {
             TempRepository.card = FuelCard(cardNumber, expiringDate, "")
         }
-        val intent = if(TempRepository.card is BankCard)
+        val intent = if (TempRepository.card is BankCard)
             Intent(this, BankEditCardActivity::class.java)
         else
             Intent(this, FuelEditCardActivity::class.java)
