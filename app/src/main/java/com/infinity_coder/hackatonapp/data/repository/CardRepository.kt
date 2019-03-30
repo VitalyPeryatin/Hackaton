@@ -15,22 +15,32 @@ import kotlinx.coroutines.runBlocking
 class CardRepository : ICardRepository {
     private val cardDao = App.cardDb.cardDao()
 
-    override fun insert(bankCard: BankCard) {
-        cardDao.insert(bankCard)
+    override fun insert(bankCard: BankCard) = runBlocking {
+        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
+            cardDao.insert(bankCard)
+        }
+        asyncBankCards.await()
     }
 
-    override fun delete(bankCard: BankCard) {
-        cardDao.delete(bankCard)
+    override fun delete(bankCard: BankCard) = runBlocking {
+        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
+            cardDao.delete(bankCard)
+        }
+        asyncBankCards.await()
+    }
+    override fun insert(fuelCard: FuelCard) = runBlocking{
+        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
+            cardDao.insert(fuelCard)
+        }
+        asyncBankCards.await()
     }
 
-    override fun insert(fuelCard: FuelCard) {
-        cardDao.insert(fuelCard)
+    override fun delete(fuelCard: FuelCard) = runBlocking {
+        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
+            cardDao.delete(fuelCard)
+        }
+        asyncBankCards.await()
     }
-
-    override fun delete(fuelCard: FuelCard) {
-        cardDao.delete(fuelCard)
-    }
-
     override fun getBankCards(): LiveData<List<BankCard>> {
         return cardDao.getBankCards()
     }
