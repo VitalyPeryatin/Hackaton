@@ -4,7 +4,9 @@ import androidx.room.Entity
 import java.util.*
 
 @Entity(tableName = "bankCards")
-class BankCard(number: String, validThru: Date, company: String, val name: String, val surName: String, path: String) : AbstractCard(number, validThru, company, path)
+class BankCard(number: String = "", validThru: Date = Date(),
+               company: String = "", val name: String = "", val surName: String = "", path: String = "") :
+    AbstractCard(number, validThru, company, path)
 
 /*data class MonthYear(val month: Int, val year: Int){
     override fun toString(): String {
