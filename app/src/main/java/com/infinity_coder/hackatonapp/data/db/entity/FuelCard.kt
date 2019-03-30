@@ -4,4 +4,4 @@ import androidx.room.Entity
 import java.util.*
 
 @Entity(tableName = "fuelCards")
-class FuelCard(number: Int, validThru: Date, company: String) : AbstractCard(number, validThru, company)
+class FuelCard(number: String, validThru: Date, company: String) : AbstractCard(number, validThru, company)
