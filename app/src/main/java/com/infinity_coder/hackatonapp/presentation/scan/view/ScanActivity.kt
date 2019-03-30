@@ -1,4 +1,4 @@
-package com.infinity_coder.hackatonapp
+package com.infinity_coder.hackatonapp.presentation.scan.view
 
 import android.app.Activity
 import android.content.Intent
@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.infinity_coder.hackatonapp.IMAGE_PATH_KEY
+import com.infinity_coder.hackatonapp.R
 import com.otaliastudios.cameraview.Audio
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.Mode
