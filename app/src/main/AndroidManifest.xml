@@ -31,8 +31,6 @@
         </activity>
         <activity android:name=".presentation.scan.view.ScanActivity"/>
         <activity android:name=".presentation.edit_card.view.EditCardActivity"/>
-        <activity android:name=".presentation.edit_card.view.BankEditCardActivity"/>
-        <activity android:name=".presentation.edit_card.view.FuelEditCardActivity"/>
         <activity android:name=".presentation.card_overview.view.OverviewCardActivity"/>
     </application>
 </manifest>
