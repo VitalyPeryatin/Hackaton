@@ -33,7 +33,7 @@ class BankEditCardActivity: AppCompatActivity() {
 
         tv_bank_card_number.setText(card.number)
         tv_holder_name.setText("${card.name} ${card.surName}")
-        tv_expiring_date.setText(card.validThru.toString())
+        tv_expiring_date.setText(card.validThru)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
