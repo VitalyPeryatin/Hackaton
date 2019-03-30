@@ -2,26 +2,59 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    <Button
-            android:text="Сканировать изображение"
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarOverview"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:id="@+id/buttonGoScan"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:textColor="@android:color/background_light"
-            android:background="@color/colorAccent"/>
-    <ImageView
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary" app:layout_constraintStart_toStartOf="parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Карта"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <com.infinity_coder.hackatonapp.presentation.custom_ui.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/colorPrimary"
-            android:id="@+id/cardImage" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/buttonGoScan"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_margin="8dp"/>
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp"
+            android:id="@+id/cardImageOverview" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbarOverview" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_margin="8dp">
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" app:srcCompat="@android:color/holo_blue_light"
+                android:id="@+id/imageView"/>
+    </com.infinity_coder.hackatonapp.presentation.custom_ui.CardView>
+    <TextView
+            android:hint="Номер карты"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewNumber" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/cardImageOverview" android:fontFamily="serif"
+            android:textColor="@color/design_default_color_on_secondary" android:textSize="18sp"/>
+    <TextView
+            android:hint="Valid Thru"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewValid" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewNumber" android:fontFamily="serif"
+            android:textColor="@color/design_default_color_on_secondary" android:textSize="18sp"/>
+    <TextView
+            android:hint="Платёжная система"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPayment" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewValid" android:fontFamily="serif"
+            android:textColor="@color/design_default_color_on_secondary" android:textSize="18sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
