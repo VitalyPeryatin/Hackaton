@@ -1,5 +1,6 @@
 package com.infinity_coder.hackatonapp.presentation.edit_card.view
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -37,7 +38,7 @@ class EditCardActivity: AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SCAN_REQUEST_CODE) {
+        if (requestCode == SCAN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show()
             val imagePath = data?.getStringExtra(IMAGE_PATH_KEY)
             val options = BitmapFactory.Options()
