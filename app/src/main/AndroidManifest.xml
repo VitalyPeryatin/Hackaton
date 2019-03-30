@@ -15,14 +15,15 @@
             tools:ignore="GoogleAppIndexingWarning"
             android:fullBackupContent="false">
         <activity android:name=".presentation.main.view.MainActivity">
+        </activity>
+        <activity android:name=".presentation.scan.view.ScanActivity"/>
+        <activity android:name=".presentation.edit_card.view.EditCardActivity"/>
+        <activity android:name=".presentation.card_overview.view.OverviewCardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".presentation.scan.view.ScanActivity"/>
-        <activity android:name=".presentation.card_overview.view.OverviewCardActivity">
         </activity>
     </application>
 
