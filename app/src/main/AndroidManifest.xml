@@ -16,6 +16,7 @@
 
         </activity>
         <activity android:name=".presentation.scan.view.ScanActivity"/>
+        <activity android:name=".presentation.edit_card.view.EditCardActivity"/>
         <activity android:name=".presentation.card_overview.view.OverviewCardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
