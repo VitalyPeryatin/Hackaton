@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
@@ -16,7 +15,7 @@ class EditCardActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_card)
         setSupportActionBar(toolbar)
-        toolbar.setNavigationIcon(android.R.drawable.arrow_down_float)
+        toolbar.setNavigationIcon(R.drawable.ic_close)
 
         fabCapturePhoto.setOnClickListener {
             startActivity(Intent(this, ScanActivity::class.java))

@@ -8,6 +8,7 @@ import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.edit_card.view.EditCardActivity
 import com.infinity_coder.hackatonapp.presentation.main.adapter.RecyclerCardAdapter
+import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), RecyclerCardAdapter.Listener {
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(), RecyclerCardAdapter.Listener {
 
 
         fabAdd.setOnClickListener{
-            startActivity(Intent(this, EditCardActivity::class.java))
+            startActivity(Intent(this, ScanActivity::class.java))
 
         }
     }

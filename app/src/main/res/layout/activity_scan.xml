@@ -6,10 +6,18 @@
                                                    android:layout_height="match_parent">
 
 
+    <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/actionBarTheme"
+            android:minHeight="?attr/actionBarSize" android:id="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     <com.otaliastudios.cameraview.CameraView
             android:id="@+id/cameraView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:keepScreenOn="true"
             app:cameraExperimental="true"
             app:cameraPlaySounds="true"
@@ -22,8 +30,8 @@
             app:cameraGestureScrollHorizontal="exposureCorrection"
             app:cameraGestureScrollVertical="none"
             app:cameraMode="picture" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" tools:layout_editor_absoluteY="16dp"
-            app:layout_constraintHorizontal_bias="0.0">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
     </com.otaliastudios.cameraview.CameraView>
 
