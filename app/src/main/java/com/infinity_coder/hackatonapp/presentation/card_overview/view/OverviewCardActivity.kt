@@ -14,10 +14,11 @@ import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_overview_card.*
+import kotlinx.android.synthetic.main.activity_overview_card.view.*
 import java.io.File
 
 
-class OverviewCardActivity: AppCompatActivity() {
+class OverviewCardActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,45 +32,47 @@ class OverviewCardActivity: AppCompatActivity() {
             .load(File(card.path))
             .into(imageView)
 
-        if(card is BankCard){
+        if (card is BankCard) {
             tvDateContainer.visibility = GONE
-            if(card.validThru.isEmpty())
+            if (card.validThru.isEmpty())
                 tvDateContainer.visibility = GONE
             else {
                 tvDateContainer.visibility = VISIBLE
                 tvDate.text = card.validThru
             }
-            if(card.name.isEmpty() && card.surName.isEmpty())
+            if (card.name.isEmpty() && card.surName.isEmpty())
                 tvHolderNameContainer.visibility = GONE
             else {
                 tvHolderNameContainer.visibility = VISIBLE
                 tvHolderName.text = "${card.name} ${card.surName}"
             }
-            if(card.number.isEmpty())
+            if (card.number.isEmpty())
                 tvBankNumberContainer.visibility = GONE
             else {
                 tvBankNumberContainer.visibility = VISIBLE
                 tvBankNumber.text = card.number
             }
-            if(card.company.isEmpty()){
+            if (card.company.isEmpty()) {
                 tvNumberContainer.visibility = GONE
-            }else tvNumberContainer.visibility = VISIBLE
-        }
-        else if(card is FuelCard){
+            } else {
+                tvNumberContainer.visibility = VISIBLE
+                tvNumberContainer.tvNumber.text = card.company
+            }
+        } else if (card is FuelCard) {
             tvHolderName.visibility = GONE
-            if(card.validThru.isEmpty())
+            if (card.validThru.isEmpty())
                 tvDateContainer.visibility = GONE
             else {
                 tvDateContainer.visibility = VISIBLE
                 tvDate.text = card.validThru
             }
-            if(card.number.isEmpty())
+            if (card.number.isEmpty())
                 tvBankNumberContainer.visibility = GONE
             else {
                 tvBankNumberContainer.visibility = VISIBLE
                 tvBankNumber.text = card.number
             }
-            if(card.subNumber.toString().isEmpty())
+            if (card.subNumber.toString().isEmpty())
                 tvNumberContainer.visibility = GONE
             else {
                 //Не тот контейнер. Этого элемента вообще нет
@@ -81,9 +84,12 @@ class OverviewCardActivity: AppCompatActivity() {
             //Платёжная система блять не отображается, найди этот ебучий setText() и блять поменяй id
             //правильный id - tvNumber
             //сами виноваты блять, нехуй было id путать
-            if(card.company.isEmpty()){
+            if (card.company.isEmpty()) {
                 tvNumberContainer.visibility = GONE
-            }else tvNumberContainer.visibility = VISIBLE
+            } else {
+                tvNumberContainer.visibility = VISIBLE
+                tvNumberContainer.tvNumber.text = card.company
+            }
         }
     }
 
@@ -93,7 +99,7 @@ class OverviewCardActivity: AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             R.id.edit -> {
                 //TODO("Make navigation")
             }

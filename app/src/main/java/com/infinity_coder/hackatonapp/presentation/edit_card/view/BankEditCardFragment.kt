@@ -8,16 +8,13 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.infinity_coder.hackatonapp.R
+import com.infinity_coder.hackatonapp.*
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.repository.CardRepository
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.domain.ICardRepository
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
-import com.infinity_coder.hackatonapp.regexBankCardName
-import com.infinity_coder.hackatonapp.regexDate
-import com.infinity_coder.hackatonapp.regexHolderName
 import kotlinx.android.synthetic.main.fragment_edit_bank_card.*
 
 class BankEditCardFragment: Fragment() {
@@ -48,7 +45,7 @@ class BankEditCardFragment: Fragment() {
         }
 
         tv_bank_card_number.setText(card.number)
-        tv_holder_name.setText("${card.name} ${card.surName}")
+        tv_holder_name.setText(card.name)
         tv_expiring_date.setText(card.validThru)
         etCompany.setText(card.company)
         cardRepository.insert(card)
@@ -63,7 +60,7 @@ class BankEditCardFragment: Fragment() {
 
     private fun validateFields() {
 
-        if(!tv_bank_card_number.text.toString().matches(regexBankCardName)) errorStack += "Неправильно введён номер карты\n\n"
+        if(!tv_bank_card_number.text.toString().matches(regexBankCardNameCheck)) errorStack += "Неправильно введён номер карты\n\n"
         if(!tv_holder_name.text.toString().matches(regexHolderName)) errorStack += "Неправильно введено имя держателя карты\n\n"
         if(!tv_expiring_date.text.toString().matches(regexDate)) errorStack += "Неправильно введён срок действия\n\n"
     }
@@ -88,6 +85,7 @@ class BankEditCardFragment: Fragment() {
 
                     cardRepository.insert(card)
                     startActivity(Intent(context, OverviewCardActivity::class.java))
+                    activity?.finish()
                 }
                 else showError(errorStack); errorStack = ""
             }

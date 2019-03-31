@@ -29,7 +29,7 @@
                 android:orientation="vertical">
 
             <TextView
-                    android:text="tv_holder_name"
+                    android:text="Имя держателя карты"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView2"/>
             <EditText
@@ -38,7 +38,7 @@
                     android:ems="10"
                     android:id="@+id/tv_holder_name"/>
             <TextView
-                    android:text="tv_bank_card_number"
+                    android:text="Банковский номер карты"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView3"/>
             <EditText
@@ -47,7 +47,7 @@
                     android:ems="10"
                     android:id="@+id/tv_bank_card_number"/>
             <TextView
-                    android:text="tv_expiring_date"
+                    android:text="Дата истечения срока действия"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView4"/>
             <EditText
@@ -56,7 +56,7 @@
                     android:ems="10"
                     android:id="@+id/tv_expiring_date"/>
             <TextView
-                    android:text="TextView"
+                    android:text="Платежная система"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             <EditText

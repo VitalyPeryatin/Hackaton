@@ -7,14 +7,11 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.infinity_coder.hackatonapp.R
+import com.infinity_coder.hackatonapp.*
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
-import com.infinity_coder.hackatonapp.regexBankCardName
-import com.infinity_coder.hackatonapp.regexDate
-import com.infinity_coder.hackatonapp.regexFuelCardName
 import kotlinx.android.synthetic.main.activity_edit_fuel_card.*
 import kotlinx.android.synthetic.main.activity_overview_card.*
 
@@ -34,8 +31,8 @@ class FuelEditCardFragment: Fragment() {
 
         card = TempRepository.card as FuelCard
 
-        tv_bank_card_number.setText(card.number)
-        tv_card_number.setText(card.subNumber)
+        tv_bank_card_number.setText(card.subNumber)
+        tv_card_number.setText(card.number)
         tv_expiring_date.setText(card.validThru)
         etCompany.setText(card.company)
 
@@ -56,8 +53,8 @@ class FuelEditCardFragment: Fragment() {
 
     private fun validateFields() {
 
-        if(!tv_bank_card_number.text.toString().matches(regexBankCardName)) errorStack += "Неправильно введён номер карты\n\n"
-        if(!tv_card_number.text.toString().matches(regexFuelCardName)) errorStack += "Неправильно введено имя держателя карты\n\n"
+//        if(!tv_bank_card_number.text.toString().matches(regexBankCardNameCheck)) errorStack += "Неправильно введён банковский номер карты\n\n"
+        if(!tv_card_number.text.toString().matches(regexFuelCardName)) errorStack += "Неправильно введён номер карты\n\n"
         if(!tv_expiring_date.text.toString().matches(regexDate)) errorStack += "Неправильно введён срок действия\n\n"
     }
 
@@ -76,12 +73,13 @@ class FuelEditCardFragment: Fragment() {
                 if (errorStack.isEmpty()) {
                     card = TempRepository.card as FuelCard
 
-                    card.number = tv_bank_card_number.text.toString()
-                    card.subNumber = tv_card_number.text.toString()
+                    card.number = tv_card_number.text.toString()
+                    card.subNumber = tv_bank_card_number.text.toString()
                     card.validThru = tv_expiring_date.text.toString()
-                    card.company = tvNumber.text.toString()
+                    card.company = etCompany.text.toString()
 
                     startActivity(Intent(context, OverviewCardActivity::class.java))
+                    activity?.finish()
                 } else showError(errorStack); errorStack = ""
             }
         }
