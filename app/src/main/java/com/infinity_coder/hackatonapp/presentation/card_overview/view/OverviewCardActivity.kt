@@ -28,6 +28,9 @@ class OverviewCardActivity : AppCompatActivity() {
 
         val card = TempRepository.card
 
+        val title = if(card is BankCard) "Банковская карта" else "Топливная карта"
+        supportActionBar?.title = title
+
         Picasso.get()
             .load(File(card.path))
             .into(imageView)
