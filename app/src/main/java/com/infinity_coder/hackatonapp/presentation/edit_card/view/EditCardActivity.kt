@@ -139,7 +139,7 @@ class EditCardActivity : AppCompatActivity() {
         val image = FirebaseVisionImage.fromBitmap(mSelectedImage)
         val recognizer = FirebaseVision.getInstance()
             .cloudTextRecognizer
-        FirebaseVisionCloudTextRecognizerOptions.Builder().setLanguageHints(listOf("en")).setModelType(SPARSE_MODEL).build()
+        FirebaseVisionCloudTextRecognizerOptions.Builder().setLanguageHints(listOf("en")).build()
         recognizer.processImage(image)
             .addOnSuccessListener { texts ->
                 processCloudTextRecognitionResult(texts)
