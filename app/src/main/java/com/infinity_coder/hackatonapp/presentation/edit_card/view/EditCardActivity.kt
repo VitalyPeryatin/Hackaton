@@ -20,6 +20,7 @@ import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
+import java.lang.Exception
 
 class EditCardActivity : AppCompatActivity() {
     var cardNumber = ""
@@ -136,16 +137,23 @@ class EditCardActivity : AppCompatActivity() {
         val image = FirebaseVisionImage.fromBitmap(mSelectedImage)
         val recognizer = FirebaseVision.getInstance()
             .cloudTextRecognizer
-        FirebaseVisionCloudTextRecognizerOptions.Builder().setLanguageHints(listOf("en")).build()
-        recognizer.processImage(image)
-            .addOnSuccessListener { texts ->
-                processCloudTextRecognitionResult(texts)
-            }
-            .addOnFailureListener { e ->
-                e.printStackTrace()
-                showToast("Bank card not recognized!")
-                finish()
-            }
+        try {
+            FirebaseVisionCloudTextRecognizerOptions.Builder().setLanguageHints(listOf("en")).build()
+            recognizer.processImage(image)
+                .addOnSuccessListener { texts ->
+                    processCloudTextRecognitionResult(texts)
+                }
+                .addOnFailureListener { e ->
+                    e.printStackTrace()
+                    showToast("Bank card not recognized!")
+                    finish()
+                }
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+            showToast("Bank card not recognized!")
+            finish()
+        }
     }
 
     private fun processCloudTextRecognitionResult(text: FirebaseVisionText) {
