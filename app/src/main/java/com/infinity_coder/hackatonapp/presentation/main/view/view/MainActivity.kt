@@ -1,4 +1,4 @@
-package com.infinity_coder.hackatonapp.presentation.main.view
+package com.infinity_coder.hackatonapp.presentation.main.view.view
 
 import android.content.Intent
 import android.os.Bundle

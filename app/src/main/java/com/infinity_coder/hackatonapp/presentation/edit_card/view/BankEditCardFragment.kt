@@ -53,7 +53,6 @@ class BankEditCardFragment: Fragment() {
         tv_holder_name.setText(card.name)
         tv_expiring_date.setText(card.validThru)
         etCompany.setText(card.company)
-        cardRepository.insert(card)
 
         tv_holder_name.background.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
         tv_bank_card_number.background.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
@@ -93,9 +92,6 @@ class BankEditCardFragment: Fragment() {
                     card.company = etCompany.text.toString()
                     card.name = tv_holder_name.text.toString()
                     Log.d("BEAC", card.number + card.validThru)
-                    /*val cardMock:BankCard
-                    cardMock = BankCard(tv_bank_card_number.text.toString(), tv_expiring_date.text.toString(), etCompany.text.toString(), tv_holder_name.text.toString())
-                    cardRepository.insert(cardMock)*/
                     cardRepository.insert(card)
                     startActivity(Intent(context, OverviewCardActivity::class.java))
                     activity?.finish()

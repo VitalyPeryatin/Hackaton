@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
+import com.infinity_coder.hackatonapp.domain.ICardRepository
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import com.infinity_coder.hackatonapp.regexDate
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_edit_fuel_card.*
 class FuelEditCardFragment: Fragment() {
 
     private var errorStack = ""
-
+    lateinit var cardRepository: ICardRepository
     lateinit var card: FuelCard
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -77,7 +78,7 @@ class FuelEditCardFragment: Fragment() {
                     card.subNumber = tv_bank_card_number.text.toString()
                     card.validThru = tv_expiring_date.text.toString()
                     card.company = etCompany.text.toString()
-
+                    cardRepository.insert(card)
                     startActivity(Intent(context, OverviewCardActivity::class.java))
                     activity?.finish()
                 } else showError(errorStack); errorStack = ""

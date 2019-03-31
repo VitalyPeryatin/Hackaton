@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.data.db.entity.AbstractCard
-import com.infinity_coder.hackatonapp.presentation.main.view.MainActivity
+import com.infinity_coder.hackatonapp.presentation.main.view.view.MainActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_mycard.view.*
 import java.io.File

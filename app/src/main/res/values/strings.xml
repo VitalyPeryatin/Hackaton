@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">HackatonApp</string>
+    <string name="app_name">Card Holder</string>
     <string name="descriptionCard">Карта</string>
-    <string name="title_activity_main2">Main2Activity</string>
 </resources>
