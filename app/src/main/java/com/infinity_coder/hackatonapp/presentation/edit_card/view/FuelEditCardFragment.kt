@@ -13,7 +13,7 @@ import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCa
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import com.infinity_coder.hackatonapp.regexDate
 import com.infinity_coder.hackatonapp.regexFuelCardName
-import kotlinx.android.synthetic.main.activity_edit_fuel_card.*
+import kotlinx.android.synthetic.main.fragment_edit_fuel_card.*
 
 class FuelEditCardFragment: Fragment() {
 

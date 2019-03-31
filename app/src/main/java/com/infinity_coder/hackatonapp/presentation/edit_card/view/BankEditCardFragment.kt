@@ -2,6 +2,8 @@ package com.infinity_coder.hackatonapp.presentation.edit_card.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -52,6 +54,11 @@ class BankEditCardFragment: Fragment() {
         tv_expiring_date.setText(card.validThru)
         etCompany.setText(card.company)
         cardRepository.insert(card)
+
+        tv_holder_name.background.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
+        tv_bank_card_number.background.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
+        tv_expiring_date.background.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
+        etCompany.background.setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
