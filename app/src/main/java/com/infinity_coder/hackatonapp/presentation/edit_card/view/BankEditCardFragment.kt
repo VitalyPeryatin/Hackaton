@@ -65,6 +65,7 @@ class BankEditCardFragment: Fragment() {
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_close)
+        (activity as AppCompatActivity).supportActionBar?.title = "Банковская карта"
     }
 
     private fun validateFields() {

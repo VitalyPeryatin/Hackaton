@@ -45,6 +45,7 @@ class FuelEditCardFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = "Топливная карта"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
