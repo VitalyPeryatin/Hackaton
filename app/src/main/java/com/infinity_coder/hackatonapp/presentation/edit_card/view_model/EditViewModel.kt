@@ -1,6 +1,7 @@
 package com.infinity_coder.hackatonapp.presentation.edit_card.view_model
 
 import android.graphics.Bitmap
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.ml.vision.FirebaseVision
@@ -17,6 +18,7 @@ import com.infinity_coder.hackatonapp.regexBankCardName
 import com.infinity_coder.hackatonapp.regexDate
 import com.infinity_coder.hackatonapp.regexFuelCardName
 import com.infinity_coder.hackatonapp.regexHolderName
+import java.lang.Exception
 
 class EditViewModel: ViewModel() {
     var cardNumber = ""
@@ -93,15 +95,20 @@ class EditViewModel: ViewModel() {
         val image = FirebaseVisionImage.fromBitmap(mSelectedImage)
         val recognizer = FirebaseVision.getInstance()
             .cloudTextRecognizer
-        FirebaseVisionCloudTextRecognizerOptions.Builder().setLanguageHints(listOf("en")).build()
-        recognizer.processImage(image)
-            .addOnSuccessListener { texts ->
-                processCloudTextRecognitionResult(texts)
-            }
-            .addOnFailureListener { e ->
-                e.printStackTrace()
-                errorListener.postValue(true)
-            }
+        try {
+            FirebaseVisionCloudTextRecognizerOptions.Builder().setLanguageHints(listOf("en")).build()
+            recognizer.processImage(image)
+                .addOnSuccessListener { texts ->
+                    processCloudTextRecognitionResult(texts)
+                }
+                .addOnFailureListener { e ->
+                    e.printStackTrace()
+                    errorListener.postValue(true)
+                }
+        }
+        catch(e: Exception){
+            errorListener.postValue(true)
+        }
     }
 
     private fun processCloudTextRecognitionResult(text: FirebaseVisionText) {
