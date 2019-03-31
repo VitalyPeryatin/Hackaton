@@ -2,7 +2,7 @@ package com.infinity_coder.hackatonapp.data.db.entity
 
 import androidx.room.Entity
 
-@Entity(tableName = "bankCards")
+@Entity
 class BankCard(number: String = "", validThru: String = "",
                company: String = "", var name: String = "", var surName: String = "", path: String = "") :
     AbstractCard(number, validThru, company, path)
