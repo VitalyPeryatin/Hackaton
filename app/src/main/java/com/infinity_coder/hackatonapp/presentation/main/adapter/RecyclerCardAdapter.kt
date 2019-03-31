@@ -1,28 +1,36 @@
 package com.infinity_coder.hackatonapp.presentation.main.adapter
 
-import android.content.Context
 import android.view.*
 import androidx.appcompat.view.ActionMode
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity_coder.hackatonapp.R
-import com.infinity_coder.hackatonapp.data.db.entity.AdapterCard
-import com.infinity_coder.hackatonapp.data.repository.CardRepository
+import com.infinity_coder.hackatonapp.data.db.entity.AbstractCard
+import com.infinity_coder.hackatonapp.presentation.main.view.MainActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_mycard.view.*
 
 
-class RecyclerCardAdapter(private val listener: Listener, context: Context) :RecyclerView.Adapter<RecyclerCardAdapter.CardViewHolder>() {
+class RecyclerCardAdapter(private val listener: Listener, context: MainActivity, var cardList : LiveData<List<AbstractCard>>) :RecyclerView.Adapter<RecyclerCardAdapter.CardViewHolder>() {
     private val selected = mutableListOf<Int>()
     private val selectedViews = mutableListOf<CardViewHolder>()
-    private val repository = CardRepository()
+    var items : List<AbstractCard> = listOf()
 
-    private var cardList :List<AdapterCard> = repository.getAdapterCards()
+    init {
+        cardList.observe(context, Observer {
+            items = it
+            notifyDataSetChanged()
+        })
+    }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        Picasso.get()
-            .load(cardList[position].path)
-            .noFade()
-            .into(holder.image)
+        if (items[position].path != "") {
+            Picasso.get()
+                .load(items[position].path)
+                .noFade()
+                .into(holder.image)
+        }
         /*val isSelected = !selected.contains(position)
         holder.itemView.isSelected = isSelected
         if (!isSelected)
@@ -31,7 +39,7 @@ class RecyclerCardAdapter(private val listener: Listener, context: Context) :Rec
             holder.itemView.setBackgroundColor(holder.itemView.context.resources.getColor(android.R.color.white))*/
     }
 
-    override fun getItemCount(): Int = cardList.size
+    override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_mycard, parent, false)
@@ -46,7 +54,7 @@ class RecyclerCardAdapter(private val listener: Listener, context: Context) :Rec
     inner class CardViewHolder(view: View, private val listener: Listener) : RecyclerView.ViewHolder(view){
         val image = view.imageCard!!
         init{
-            view.setOnClickListener{listener.onClick(cardList[layoutPosition].number)}
+            view.setOnClickListener{listener.onClick(items[layoutPosition].number)}
             /*view.setOnLongClickListener{
                 notifyItemChanged(layoutPosition)
                 if (!selected.contains(layoutPosition)) {
