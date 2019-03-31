@@ -40,7 +40,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:backgroundTint="@color/design_default_color_on_secondary"
+            app:backgroundTint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_camera_white"/>
     <FrameLayout
             android:layout_width="300dp"
