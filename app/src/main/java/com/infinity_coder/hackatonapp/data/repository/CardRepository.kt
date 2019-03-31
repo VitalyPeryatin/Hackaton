@@ -1,5 +1,6 @@
 package com.infinity_coder.hackatonapp.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.infinity_coder.hackatonapp.App
 import com.infinity_coder.hackatonapp.data.db.entity.AbstractCard
@@ -59,17 +60,16 @@ class CardRepository : ICardRepository {
     override fun getAdapterCards(): List<AdapterCard> = runBlocking (Dispatchers.IO){
         val items = mutableListOf<AbstractCard>()
         val adapterItems = mutableListOf<AdapterCard>()
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.getBankCards()
+        val bankCards : LiveData<List<BankCard>> = cardDao.getBankCards()
+        val fuelCards : LiveData<List<FuelCard>> = cardDao.getFuelCards()
+        if(bankCards.value != null && bankCards.value!!.isNotEmpty()) {
+            Log.d("Repo", "Bank is not empty")
+            items.addAll(bankCards.value!!)
         }
-        val asyncFuelCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.getFuelCards()
+        if(fuelCards.value != null && fuelCards.value!!.isNotEmpty()) {
+            Log.d("Repo", "Fuel is not empty")
+            items.addAll(fuelCards.value!!)
         }
-        if(asyncBankCards.await().value != null)
-            items.addAll(asyncBankCards.await().value!!)
-        if(asyncFuelCards.await().value != null)
-            items.addAll(asyncFuelCards.await().value!!)
-
         items.map { adapterItems.add(AdapterCard(it.number, it.path)) }
         return@runBlocking adapterItems
     }

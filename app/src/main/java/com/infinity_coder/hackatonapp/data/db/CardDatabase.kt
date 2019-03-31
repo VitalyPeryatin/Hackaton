@@ -7,7 +7,7 @@ import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 
 const val DATABASE_NAME = "cards_db"
-@Database(entities = [BankCard::class, FuelCard::class], version = 1)
+@Database(entities = [BankCard::class, FuelCard::class], version = 1, exportSchema = false)
 abstract class CardDatabase() : RoomDatabase(){
     abstract fun cardDao(): CardDao
 }

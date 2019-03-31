@@ -11,11 +11,10 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_mycard.view.*
 
 
-class RecyclerCardAdapter(private val listener: Listener, context: Context) :RecyclerView.Adapter<RecyclerCardAdapter.CardViewHolder>() {
+class RecyclerCardAdapter(private val listener: Listener, context: Context, var cardList : List<AdapterCard>) :RecyclerView.Adapter<RecyclerCardAdapter.CardViewHolder>() {
     private val selected = mutableListOf<Int>()
     private val selectedViews = mutableListOf<CardViewHolder>()
     private val repository = CardRepository()
-
     /*private val mocking = listOf(
         AdapterCard("1", "${context.filesDir}/sample1.png"),
         AdapterCard("2", "${context.filesDir}/sample2.jpg"),
@@ -23,8 +22,6 @@ class RecyclerCardAdapter(private val listener: Listener, context: Context) :Rec
         AdapterCard("4", "${context.filesDir}/sample1.png"),
         AdapterCard("5", "${context.filesDir}/sample2.jpg")
         )*/
-
-    private var cardList :List<AdapterCard> = repository.getAdapterCards()
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         Picasso.get()

@@ -3,6 +3,7 @@ package com.infinity_coder.hackatonapp.presentation.edit_card.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -72,7 +73,7 @@ class BankEditCardActivity: AppCompatActivity() {
                     card.validThru = tv_expiring_date.text.toString()
                     card.company = etCompany.text.toString()
                     card.name = tv_holder_name.text.toString()
-
+                    Log.d("BEAC", card.number + card.validThru)
                     cardRepository.insert(card)
                     startActivity(Intent(this, OverviewCardActivity::class.java))
                 }
