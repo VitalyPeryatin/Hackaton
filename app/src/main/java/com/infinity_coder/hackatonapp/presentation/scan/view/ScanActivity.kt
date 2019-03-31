@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.infinity_coder.hackatonapp.IMAGE_PATH_KEY
 import com.infinity_coder.hackatonapp.R
 import com.otaliastudios.cameraview.*
+import com.zomato.photofilters.imageprocessors.Filter
+import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubfilter
 import kotlinx.android.synthetic.main.activity_scan.*
 import java.io.FileOutputStream
 import java.util.*
@@ -41,7 +43,7 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-    private fun setCameraView(){
+    private fun setCameraView() {
         cameraView.setLifecycleOwner(this)
         cameraView.mode = Mode.PICTURE
         cameraView.audio = Audio.OFF
@@ -56,7 +58,14 @@ class ScanActivity : AppCompatActivity() {
                 val rotation = if (orientation == 0 || orientation == 180) 0 else 180
                 matrix.postRotate(orientation.toFloat() + rotation)
                 val horizontalBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-                val croppedBmp= Bitmap.createBitmap(horizontalBitmap, (horizontalBitmap.width * 0.1).toInt(), (horizontalBitmap.height * 0.33).toInt(), (horizontalBitmap.width * 0.8).toInt(), (horizontalBitmap.width * 0.5).toInt())
+                var croppedBmp = Bitmap.createBitmap(
+                    horizontalBitmap,
+                    (horizontalBitmap.width * 0.1).toInt(),
+                    (horizontalBitmap.height * 0.33).toInt(),
+                    (horizontalBitmap.width * 0.8).toInt(),
+                    (horizontalBitmap.width * 0.5).toInt()
+                )
+                croppedBmp = imageProcess(croppedBmp)
                 val imagePath = saveBitmapToDir(croppedBmp, "$filesDir")
                 val intent = Intent()
                 intent.putExtra(IMAGE_PATH_KEY, imagePath)
@@ -67,7 +76,13 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-  private fun saveBitmapToDir(bitmap: Bitmap?, parentDir: String): String {
+    private fun imageProcess(bitmap: Bitmap): Bitmap {
+        val myFilter = Filter()
+        myFilter.addSubFilter(ContrastSubfilter(3f))
+        return myFilter.processFilter(bitmap)
+    }
+
+    private fun saveBitmapToDir(bitmap: Bitmap?, parentDir: String): String {
         var out: FileOutputStream? = null
         val pathName = "$parentDir/image-${UUID.randomUUID()}.png"
         try {

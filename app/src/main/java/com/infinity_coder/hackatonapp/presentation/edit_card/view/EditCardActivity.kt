@@ -51,7 +51,7 @@ class EditCardActivity : AppCompatActivity() {
             val options = BitmapFactory.Options()
             options.inPreferredConfig = Bitmap.Config.ARGB_8888
             var bitmap = BitmapFactory.decodeFile(imagePath, options)
-            bitmap = imageProcess(bitmap)
+//            bitmap = imageProcess(bitmap)
 
 
             if (isNetworkConnected()) {
@@ -66,11 +66,11 @@ class EditCardActivity : AppCompatActivity() {
         }
     }
 
-    private fun imageProcess(bitmap: Bitmap): Bitmap {
-        val myFilter = SampleFilters.getNightWhisperFilter()
-        val outputImage = myFilter.processFilter(bitmap)
-        return outputImage
-    }
+//    private fun imageProcess(bitmap: Bitmap): Bitmap {
+//        val myFilter = SampleFilters.getNightWhisperFilter()
+//        val outputImage = myFilter.processFilter(bitmap)
+//        return outputImage
+//    }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
@@ -191,7 +191,7 @@ class EditCardActivity : AppCompatActivity() {
         }
 
         if (holderName != ""){
-            TempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1], imagePath)
+            TempRepository.card = BankCard(bankCardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1], imagePath)
         }
         else{
             TempRepository.card = FuelCard(cardNumber, expiringDate, "", imagePath)
