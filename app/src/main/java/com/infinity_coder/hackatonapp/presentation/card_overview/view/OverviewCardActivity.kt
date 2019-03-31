@@ -14,10 +14,11 @@ import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_overview_card.*
+import kotlinx.android.synthetic.main.activity_overview_card.view.*
 import java.io.File
 
 
-class OverviewCardActivity: AppCompatActivity() {
+class OverviewCardActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,46 +32,63 @@ class OverviewCardActivity: AppCompatActivity() {
             .load(File(card.path))
             .into(imageView)
 
-        if(card is BankCard){
-            tvNumber.visibility = GONE
-            if(card.validThru.isEmpty())
-                tvDate.visibility = GONE
+        if (card is BankCard) {
+            tvDateContainer.visibility = GONE
+            if (card.validThru.isEmpty())
+                tvDateContainer.visibility = GONE
             else {
-                tvDate.visibility = VISIBLE
+                tvDateContainer.visibility = VISIBLE
                 tvDate.text = card.validThru
             }
-            if(card.name.isEmpty() && card.surName.isEmpty())
-                tvHolderName.visibility = GONE
+            if (card.name.isEmpty() && card.surName.isEmpty())
+                tvHolderNameContainer.visibility = GONE
             else {
-                tvHolderName.visibility = VISIBLE
+                tvHolderNameContainer.visibility = VISIBLE
                 tvHolderName.text = "${card.name} ${card.surName}"
             }
-            if(card.number.isEmpty())
-                tvBankNumber.visibility = GONE
+            if (card.number.isEmpty())
+                tvBankNumberContainer.visibility = GONE
             else {
-                tvBankNumber.visibility = VISIBLE
+                tvBankNumberContainer.visibility = VISIBLE
                 tvBankNumber.text = card.number
             }
-        }
-        else if(card is FuelCard){
+            if (card.company.isEmpty()) {
+                tvNumberContainer.visibility = GONE
+            } else {
+                tvNumberContainer.visibility = VISIBLE
+                tvNumberContainer.tvNumber.text = card.company
+            }
+        } else if (card is FuelCard) {
             tvHolderName.visibility = GONE
-            if(card.validThru.isEmpty())
-                tvDate.visibility = GONE
+            if (card.validThru.isEmpty())
+                tvDateContainer.visibility = GONE
             else {
-                tvDate.visibility = VISIBLE
+                tvDateContainer.visibility = VISIBLE
                 tvDate.text = card.validThru
             }
-            if(card.number.isEmpty())
-                tvBankNumber.visibility = GONE
+            if (card.number.isEmpty())
+                tvBankNumberContainer.visibility = GONE
             else {
-                tvBankNumber.visibility = VISIBLE
+                tvBankNumberContainer.visibility = VISIBLE
                 tvBankNumber.text = card.number
             }
-            if(card.subNumber.toString().isEmpty())
-                tvNumber.visibility = GONE
+            if (card.subNumber.toString().isEmpty())
+                tvNumberContainer.visibility = GONE
             else {
-                tvNumber.visibility = VISIBLE
+                //Не тот контейнер. Этого элемента вообще нет
+                //Нужен - создайте
+                tvNumberContainer.visibility = VISIBLE
                 tvNumber.text = card.subNumber
+            }
+            //Здесь всё правильно. Id перепутан, ну и хуй с ним, я не буду ничего менять
+            //Платёжная система блять не отображается, найди этот ебучий setText() и блять поменяй id
+            //правильный id - tvNumber
+            //сами виноваты блять, нехуй было id путать
+            if (card.company.isEmpty()) {
+                tvNumberContainer.visibility = GONE
+            } else {
+                tvNumberContainer.visibility = VISIBLE
+                tvNumberContainer.tvNumber.text = card.company
             }
         }
     }
@@ -81,7 +99,7 @@ class OverviewCardActivity: AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             R.id.edit -> {
                 //TODO("Make navigation")
             }

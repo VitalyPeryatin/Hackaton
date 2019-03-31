@@ -9,9 +9,11 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions
 import com.google.firebase.ml.vision.text.FirebaseVisionText
 import com.infinity_coder.hackatonapp.*
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
@@ -20,7 +22,6 @@ import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 
 class EditCardActivity : AppCompatActivity() {
-    val tempRepository = TempRepository
     var cardNumber = ""
     var holderName = ""
     var bankCardNumber = ""
@@ -75,8 +76,8 @@ class EditCardActivity : AppCompatActivity() {
             }
     }
 
-    private fun processTextRecognitionResult(texts: FirebaseVisionText) {
-        val blocks = texts.textBlocks
+    private fun processTextRecognitionResult(text: FirebaseVisionText) {
+        val blocks = text.textBlocks
         for (i in blocks.indices) {
             val lines = blocks[i].lines
             for (j in lines.indices) {
@@ -86,37 +87,38 @@ class EditCardActivity : AppCompatActivity() {
                 if (lines[j].text.matches(regexHolderName)) {
                     holderName = (lines[j].text)
                 }
-                if (lines[j].text.replace(" ", "")
-                        .matches(regexBankCardName)
+                if (lines[j].text.replace('b', '6').matches(regexBankCardName)
                 ) {
-                    bankCardNumber = (lines[j].text)
+                    bankCardNumber = lines[j].text.replace('b', '6')
                 }
 
                 val elements = lines[j].elements
                 for (l in elements.indices) {
-                    if (elements[l].text.matches(regexDate)) {
-                        expiringDate = (elements[l].text)
+                    if (elements[l].text.replace('S', '5').matches(regexDate)) {
+                        expiringDate = elements[l].text.replace('S', '5')
+                    }
+                    if (elements[l].text.replace('S', '5').contains('/')) {
+                        val slashPos = elements[l].text.indexOf('/')
+                        if (slashPos - 2 >= 0 && slashPos + 3 < lines[j].text.length)
+                            expiringDate = elements[l].text.substring(slashPos - 2, slashPos + 3)
+
+
                     }
                     when {
                         elements[l].text == "VISA" -> company = "Visa"
                         elements[l].text == "MasterCard" -> company = "MasterCard"
+                        elements[l].text == "mastercard" -> company = "MasterCard"
                     }
                 }
             }
         }
-        if (holderName != ""){
-            tempRepository.card = BankCard(bankCardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
-        }
-        else{
-            tempRepository.card = FuelCard(cardNumber, expiringDate, "")
+
+        if (!holderName.isEmpty()) {
+            TempRepository.card = BankCard(bankCardNumber, expiringDate, company, holderName, " ", imagePath)
+        } else {
+            TempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)
         }
 
-        if (holderName != "") {
-            TempRepository.card =
-                BankCard(cardNumber, expiringDate, company, holderName, "", imagePath)
-        } else {
-            TempRepository.card = FuelCard(cardNumber, expiringDate, "")
-        }
         if (TempRepository.card is BankCard)
             navigateTo(BankEditCardFragment())
         else
@@ -124,7 +126,7 @@ class EditCardActivity : AppCompatActivity() {
 
     }
 
-    private fun navigateTo(fragment: Fragment){
+    private fun navigateTo(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
@@ -134,6 +136,7 @@ class EditCardActivity : AppCompatActivity() {
         val image = FirebaseVisionImage.fromBitmap(mSelectedImage)
         val recognizer = FirebaseVision.getInstance()
             .cloudTextRecognizer
+        FirebaseVisionCloudTextRecognizerOptions.Builder().setLanguageHints(listOf("en")).build()
         recognizer.processImage(image)
             .addOnSuccessListener { texts ->
                 processCloudTextRecognitionResult(texts)
@@ -159,26 +162,37 @@ class EditCardActivity : AppCompatActivity() {
                 }
                 if (lines[j].text.matches(regexBankCardName)) {
                     bankCardNumber = (lines[j].text)
-                }
-
-                val elements = lines[j].elements
-                for (l in elements.indices) {
-                    if (elements[l].text.matches(regexDate)) {
-                        expiringDate = (elements[l].text)
+                    if (lines[j].text.replace('b', '6').matches(regexBankCardName)
+                    ) {
+                        bankCardNumber = lines[j].text.replace('b', '6')
                     }
-                    when {
-                        elements[l].text == "VISA" -> company = "Visa"
-                        elements[l].text == "MasterCard" -> company = "MasterCard"
+
+                    val elements = lines[j].elements
+                    for (l in elements.indices) {
+                        if (elements[l].text.replace('S', '5').matches(regexDate)) {
+                            expiringDate = elements[l].text.replace('S', '5')
+                        }
+                        if (elements[l].text.replace('S', '5').contains('/')) {
+                            val slashPos = elements[l].text.indexOf('/')
+                            if (slashPos - 2 >= 0 && slashPos + 3 < lines[j].text.length)
+                                expiringDate = elements[l].text.substring(slashPos - 2, slashPos + 3)
+
+
+                        }
+                        when {
+                            elements[l].text == "VISA" -> company = "Visa"
+                            elements[l].text == "MasterCard" -> company = "MasterCard"
+                            elements[l].text == "mastercard" -> company = "MasterCard"
+                        }
                     }
                 }
             }
         }
 
-        if (holderName != ""){
-            TempRepository.card = BankCard(bankCardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1], imagePath)
-        }
-        else{
-            TempRepository.card = FuelCard(cardNumber, expiringDate, "", imagePath)
+        if (!holderName.isEmpty()) {
+            TempRepository.card = BankCard(bankCardNumber, expiringDate, company, holderName, " ", imagePath)
+        } else {
+            TempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)
         }
 
         if (TempRepository.card is BankCard)

@@ -3,6 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:background="@color/bgd_main"
         android:layout_height="match_parent">
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarOverview"
@@ -34,48 +35,99 @@
                 android:scaleType="centerCrop"
                 android:id="@+id/imageView"/>
     </com.infinity_coder.hackatonapp.presentation.custom_ui.MyCardView>
-    <TextView
-            android:hint="Номер карты"
+    <LinearLayout
+            android:id="@+id/tvNumberContainer"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvNumber"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/cardImageOverview"
-            android:fontFamily="serif"
-            android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="18sp"/>
-    <TextView
-            android:hint="Valid Thru"
+            app:layout_constraintTop_toBottomOf="@+id/cardImageOverview">
+        <TextView
+                android:text="Платёжная Система"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvNumber"
+                android:fontFamily="serif"
+                android:textColor="@color/design_default_color_on_secondary"
+                android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/tvDateContainer"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvDate" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvNumber" android:fontFamily="serif"
-            android:textColor="@color/design_default_color_on_secondary" android:textSize="18sp"/>
-    <TextView
-            android:hint="Платёжная система"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvNumberContainer">
+        <TextView
+                android:text="Дата истечения срока действия"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:hint="Valid Thru"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvDate"
+                android:fontFamily="serif"
+                android:textColor="@color/design_default_color_on_secondary" android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/tvHolderNameContainer"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvHolderName" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate" android:fontFamily="serif"
-            android:textColor="@color/design_default_color_on_secondary" android:textSize="18sp"/>
-    <TextView
-            android:hint="Платёжная система"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvDateContainer">
+        <TextView
+                android:text="Владелец Карты"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:hint="Владелец Карты"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvHolderName"
+                 android:fontFamily="serif"
+                android:textColor="@color/design_default_color_on_secondary" android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/tvBankNumberContainer"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvBankNumber" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:fontFamily="serif"
-            android:textColor="@color/design_default_color_on_secondary" android:textSize="18sp"
-            app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvHolderName"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvHolderNameContainer">
+        <TextView
+                android:text="Номер Карты"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvBankNumber"
+                android:fontFamily="serif"
+                android:textColor="@color/design_default_color_on_secondary" android:textSize="18sp"
+
+                />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,45 +1,40 @@
 package com.infinity_coder.hackatonapp.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Observer
 import com.infinity_coder.hackatonapp.App
 import com.infinity_coder.hackatonapp.data.db.entity.AbstractCard
-import com.infinity_coder.hackatonapp.data.db.entity.AdapterCard
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.domain.ICardRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class CardRepository : ICardRepository {
     private val cardDao = App.cardDb.cardDao()
 
-    override fun insert(bankCard: BankCard) = runBlocking {
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
+    override fun insert(bankCard: BankCard) {
+        GlobalScope.launch(Dispatchers.IO) {
             cardDao.insert(bankCard)
         }
-        asyncBankCards.await()
     }
 
-    override fun delete(bankCard: BankCard) = runBlocking {
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.delete(bankCard)
-        }
-        asyncBankCards.await()
+    override fun getBankCardsList() : List<BankCard> = runBlocking(Dispatchers.IO){
+        return@runBlocking cardDao.getBankCardsList()
     }
-    override fun insert(fuelCard: FuelCard) = runBlocking{
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.insert(fuelCard)
-        }
-        asyncBankCards.await()
+
+    override fun delete(bankCard: BankCard) = runBlocking(Dispatchers.IO){
+        cardDao.delete(bankCard)
+    }
+    override fun insert(fuelCard: FuelCard) = runBlocking(Dispatchers.IO){
+        cardDao.insert(fuelCard)
     }
 
     override fun delete(fuelCard: FuelCard) = runBlocking {
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.delete(fuelCard)
-        }
-        asyncBankCards.await()
+        cardDao.delete(fuelCard)
     }
     override fun getBankCards(): LiveData<List<BankCard>> {
         return cardDao.getBankCards()
@@ -56,22 +51,19 @@ class CardRepository : ICardRepository {
         return cardDao.getFuelCards(company)
     }
 
-    override fun getAdapterCards(): List<AdapterCard> = runBlocking (Dispatchers.IO){
-        val items = mutableListOf<AbstractCard>()
-        val adapterItems = mutableListOf<AdapterCard>()
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.getBankCards()
-        }
-        val asyncFuelCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.getFuelCards()
-        }
-        if(asyncBankCards.await().value != null)
-            items.addAll(asyncBankCards.await().value!!)
-        if(asyncFuelCards.await().value != null)
-            items.addAll(asyncFuelCards.await().value!!)
+    override fun getAdapterCards(): LiveData<List<AbstractCard>> {
+        val mediatorLiveData = MediatorLiveData<List<AbstractCard>>()
+        mediatorLiveData.addSource(cardDao.getBankCards(), Observer {
+            mediatorLiveData.value = it
+        })
+        mediatorLiveData.addSource(cardDao.getFuelCards(), Observer {
+            mediatorLiveData.value = it
+        })
+        return mediatorLiveData
+    }
 
-        items.map { adapterItems.add(AdapterCard(it.number, it.path)) }
-        return@runBlocking adapterItems
+    override fun getCardByNumber(number: String): AbstractCard? = runBlocking(Dispatchers.IO) {
+        return@runBlocking cardDao.getBankCardByNumber(number)
     }
 
     object temp{
