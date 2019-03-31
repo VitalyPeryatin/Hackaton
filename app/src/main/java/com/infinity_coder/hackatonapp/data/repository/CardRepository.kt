@@ -16,31 +16,19 @@ import kotlinx.coroutines.runBlocking
 class CardRepository : ICardRepository {
     private val cardDao = App.cardDb.cardDao()
 
-    override fun insert(bankCard: BankCard) = runBlocking {
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.insert(bankCard)
-        }
-        asyncBankCards.await()
+    override fun insert(bankCard: BankCard) = runBlocking(Dispatchers.IO) {
+        cardDao.insert(bankCard)
     }
 
-    override fun delete(bankCard: BankCard) = runBlocking {
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.delete(bankCard)
-        }
-        asyncBankCards.await()
+    override fun delete(bankCard: BankCard) = runBlocking(Dispatchers.IO){
+        cardDao.delete(bankCard)
     }
-    override fun insert(fuelCard: FuelCard) = runBlocking{
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.insert(fuelCard)
-        }
-        asyncBankCards.await()
+    override fun insert(fuelCard: FuelCard) = runBlocking(Dispatchers.IO){
+        cardDao.insert(fuelCard)
     }
 
     override fun delete(fuelCard: FuelCard) = runBlocking {
-        val asyncBankCards = GlobalScope.async(Dispatchers.IO) {
-            cardDao.delete(fuelCard)
-        }
-        asyncBankCards.await()
+        cardDao.delete(fuelCard)
     }
     override fun getBankCards(): LiveData<List<BankCard>> {
         return cardDao.getBankCards()
@@ -57,7 +45,7 @@ class CardRepository : ICardRepository {
         return cardDao.getFuelCards(company)
     }
 
-    override fun getAdapterCards(): List<AdapterCard> = runBlocking (Dispatchers.IO){
+    override fun getAdapterCards(): List<AdapterCard> {
         val items = mutableListOf<AbstractCard>()
         val adapterItems = mutableListOf<AdapterCard>()
         val bankCards : LiveData<List<BankCard>> = cardDao.getBankCards()
@@ -71,7 +59,7 @@ class CardRepository : ICardRepository {
             items.addAll(fuelCards.value!!)
         }
         items.map { adapterItems.add(AdapterCard(it.number, it.path)) }
-        return@runBlocking adapterItems
+        return adapterItems
     }
 
     object temp{

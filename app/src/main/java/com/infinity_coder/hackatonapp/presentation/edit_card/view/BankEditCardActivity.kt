@@ -46,7 +46,6 @@ class BankEditCardActivity: AppCompatActivity() {
         tv_holder_name.setText("${card.name} ${card.surName}")
         tv_expiring_date.setText(card.validThru)
         findViewById<EditText>(R.id.etCompany).setText(card.company)
-        cardRepository.insert(card)
     }
 
     private fun validateFields() {
@@ -74,6 +73,9 @@ class BankEditCardActivity: AppCompatActivity() {
                     card.company = etCompany.text.toString()
                     card.name = tv_holder_name.text.toString()
                     Log.d("BEAC", card.number + card.validThru)
+                    /*val cardMock:BankCard
+                    cardMock = BankCard(tv_bank_card_number.text.toString(), tv_expiring_date.text.toString(), etCompany.text.toString(), tv_holder_name.text.toString())
+                    cardRepository.insert(cardMock)*/
                     cardRepository.insert(card)
                     startActivity(Intent(this, OverviewCardActivity::class.java))
                 }
