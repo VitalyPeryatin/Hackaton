@@ -105,7 +105,7 @@ class EditCardActivity : AppCompatActivity() {
             }
         }
         if (holderName != ""){
-            tempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
+            tempRepository.card = BankCard(bankCardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
         }
         else{
             tempRepository.card = FuelCard(cardNumber, expiringDate, "")
@@ -157,8 +157,7 @@ class EditCardActivity : AppCompatActivity() {
                 if (lines[j].text.matches(regexHolderName)) {
                     holderName = (lines[j].text)
                 }
-                if (lines[j].text.matches(regexBankCardName)
-                ) {
+                if (lines[j].text.matches(regexBankCardName)) {
                     bankCardNumber = (lines[j].text)
                 }
 
@@ -176,7 +175,7 @@ class EditCardActivity : AppCompatActivity() {
         }
 
         if (holderName != ""){
-            TempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1], imagePath)
+            TempRepository.card = BankCard(bankCardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1], imagePath)
         }
         else{
             TempRepository.card = FuelCard(cardNumber, expiringDate, "", imagePath)
