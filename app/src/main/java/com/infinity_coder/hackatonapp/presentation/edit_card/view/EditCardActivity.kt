@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.text.TextUtils.replace
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getSystemService
@@ -171,7 +172,10 @@ class EditCardActivity : AppCompatActivity() {
                     if (elements[l].text.replace('S', '5').matches(regexDate)) {
                         expiringDate = elements[l].text.replace('S', '5')
                     }
-                    if (elements[l].text.replace('S', '5').contains('/')) {
+                    if (elements[l].text.replace('S', '5')
+                            .replace(',', '/')
+                            .contains('/')
+                    ) {
                         val slashPos = elements[l].text.indexOf('/')
                         if (slashPos - 2 >= 0 && slashPos + 3 < lines[j].text.length)
                             expiringDate = elements[l].text.substring(slashPos - 2, slashPos + 3)
