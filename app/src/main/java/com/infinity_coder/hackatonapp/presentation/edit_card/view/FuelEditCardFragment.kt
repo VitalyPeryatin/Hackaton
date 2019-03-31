@@ -16,6 +16,7 @@ import com.infinity_coder.hackatonapp.regexBankCardName
 import com.infinity_coder.hackatonapp.regexDate
 import com.infinity_coder.hackatonapp.regexFuelCardName
 import kotlinx.android.synthetic.main.activity_edit_fuel_card.*
+import kotlinx.android.synthetic.main.activity_overview_card.*
 
 class FuelEditCardFragment: Fragment() {
 
@@ -78,7 +79,7 @@ class FuelEditCardFragment: Fragment() {
                     card.number = tv_bank_card_number.text.toString()
                     card.subNumber = tv_card_number.text.toString()
                     card.validThru = tv_expiring_date.text.toString()
-                    card.company = etCompany.text.toString()
+                    card.company = tvNumber.text.toString()
 
                     startActivity(Intent(context, OverviewCardActivity::class.java))
                 } else showError(errorStack); errorStack = ""

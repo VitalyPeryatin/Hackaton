@@ -18,11 +18,6 @@ import com.infinity_coder.hackatonapp.data.db.entity.BankCard
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
-import java.util.*
-import android.R.attr.process
-import com.zomato.photofilters.SampleFilters
-import com.zomato.photofilters.imageprocessors.Filter
-
 
 class EditCardActivity : AppCompatActivity() {
     val tempRepository = TempRepository
@@ -37,7 +32,6 @@ class EditCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_card)
         navigateTo(ProcessingFragment())
-        System.loadLibrary("NativeImageProcessor")
         startActivityForResult(
             Intent(this, ScanActivity::class.java),
             SCAN_REQUEST_CODE
@@ -50,9 +44,7 @@ class EditCardActivity : AppCompatActivity() {
             imagePath = data?.getStringExtra(IMAGE_PATH_KEY)!!
             val options = BitmapFactory.Options()
             options.inPreferredConfig = Bitmap.Config.ARGB_8888
-            var bitmap = BitmapFactory.decodeFile(imagePath, options)
-//            bitmap = imageProcess(bitmap)
-
+            val bitmap = BitmapFactory.decodeFile(imagePath, options)
 
             if (isNetworkConnected()) {
                 runCloudTextRecognition(bitmap)
@@ -65,12 +57,6 @@ class EditCardActivity : AppCompatActivity() {
             finish()
         }
     }
-
-//    private fun imageProcess(bitmap: Bitmap): Bitmap {
-//        val myFilter = SampleFilters.getNightWhisperFilter()
-//        val outputImage = myFilter.processFilter(bitmap)
-//        return outputImage
-//    }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
@@ -91,7 +77,6 @@ class EditCardActivity : AppCompatActivity() {
 
     private fun processTextRecognitionResult(texts: FirebaseVisionText) {
         val blocks = texts.textBlocks
-
         for (i in blocks.indices) {
             val lines = blocks[i].lines
             for (j in lines.indices) {
@@ -120,17 +105,17 @@ class EditCardActivity : AppCompatActivity() {
             }
         }
         if (holderName != ""){
-            tempRepository.card = BankCard(cardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1])
+            tempRepository.card = BankCard(cardNumber, expiringDate, company, holderName)
         }
         else{
-            tempRepository.card = FuelCard(cardNumber, expiringDate, "")
+            tempRepository.card = FuelCard(cardNumber, expiringDate, company)
         }
 
         if (holderName != "") {
             TempRepository.card =
                 BankCard(cardNumber, expiringDate, company, holderName, "", imagePath)
         } else {
-            TempRepository.card = FuelCard(cardNumber, expiringDate, "")
+            TempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)
         }
         if (TempRepository.card is BankCard)
             navigateTo(BankEditCardFragment())
@@ -154,8 +139,8 @@ class EditCardActivity : AppCompatActivity() {
                 processCloudTextRecognitionResult(texts)
             }
             .addOnFailureListener { e ->
-                showToast("Bank card not recognized!")
                 e.printStackTrace()
+                showToast("Bank card not recognized!")
                 finish()
             }
     }
@@ -191,10 +176,10 @@ class EditCardActivity : AppCompatActivity() {
         }
 
         if (holderName != ""){
-            TempRepository.card = BankCard(bankCardNumber, expiringDate, "", holderName.split(" ")[0], holderName.split(" ")[1], imagePath)
+            TempRepository.card = BankCard(cardNumber, expiringDate, company, holderName)
         }
         else{
-            TempRepository.card = FuelCard(cardNumber, expiringDate, "", imagePath)
+            TempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)
         }
 
         if (TempRepository.card is BankCard)
