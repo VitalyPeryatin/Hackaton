@@ -150,6 +150,24 @@ class EditCardActivity : AppCompatActivity() {
 
     private fun processCloudTextRecognitionResult(text: FirebaseVisionText) {
 
+        val words = text.text.split("\n")
+        for (word in words) {
+            when (word) {
+                "VISA" -> company = "Visa"
+                "MasterCard" -> company = "MasterCard"
+                "mastercard" -> company = "MasterCard"
+            }
+
+            if (word.contains("/")) {
+                for (year in word.split(" ")) {
+                    if (year.contains("/")) {
+                        expiringDate = year
+                        break
+                    }
+                }
+            }
+        }
+
         val blocks = text.textBlocks
         for (i in blocks.indices) {
             val lines = blocks[i].lines
@@ -169,21 +187,19 @@ class EditCardActivity : AppCompatActivity() {
 
                     val elements = lines[j].elements
                     for (l in elements.indices) {
-                        if (elements[l].text.replace('S', '5').matches(regexDate)) {
-                            expiringDate = elements[l].text.replace('S', '5')
-                        }
-                        if (elements[l].text.replace('S', '5').contains('/')) {
-                            val slashPos = elements[l].text.indexOf('/')
-                            if (slashPos - 2 >= 0 && slashPos + 3 < lines[j].text.length)
-                                expiringDate = elements[l].text.substring(slashPos - 2, slashPos + 3)
-
-
-                        }
-                        when {
-                            elements[l].text == "VISA" -> company = "Visa"
-                            elements[l].text == "MasterCard" -> company = "MasterCard"
-                            elements[l].text == "mastercard" -> company = "MasterCard"
-                        }
+//                        if (elements[l].text.replace('S', '5').matches(regexDate)) {
+//                            expiringDate = elements[l].text.replace('S', '5')
+//                        }
+//                        if (elements[l].text.replace('S', '5').contains('/')) {
+//                            val slashPos = elements[l].text.indexOf('/')
+//                            if (slashPos - 2 >= 0 && slashPos + 3 < lines[j].text.length)
+//                                expiringDate = elements[l].text.substring(slashPos - 2, slashPos + 3)
+//                          }
+//                        when {
+//                            elements[l].text == "VISA" -> company = "Visa"
+//                            elements[l].text == "MasterCard" -> company = "MasterCard"
+//                            elements[l].text == "mastercard" -> company = "MasterCard"
+//                        }
                     }
                 }
             }
