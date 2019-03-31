@@ -56,7 +56,8 @@ class ScanActivity : AppCompatActivity() {
                 val rotation = if (orientation == 0 || orientation == 180) 0 else 180
                 matrix.postRotate(orientation.toFloat() + rotation)
                 val horizontalBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-                val croppedBmp= Bitmap.createBitmap(horizontalBitmap, (horizontalBitmap.width * 0.1).toInt(), (horizontalBitmap.height * 0.33).toInt(), (horizontalBitmap.width * 0.8).toInt(), (horizontalBitmap.width * 0.5).toInt())
+                val width = horizontalBitmap.width * 0.8
+                val croppedBmp= Bitmap.createBitmap(horizontalBitmap, (horizontalBitmap.width * 0.1).toInt(), (horizontalBitmap.height * 0.33).toInt(), (width).toInt(), (width / 1.6).toInt())
                 val imagePath = saveBitmapToDir(croppedBmp, "$filesDir")
                 val intent = Intent()
                 intent.putExtra(IMAGE_PATH_KEY, imagePath)

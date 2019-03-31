@@ -32,7 +32,7 @@ class OverviewCardActivity: AppCompatActivity() {
             .into(imageView)
 
         if(card is BankCard){
-            tvNumber.visibility = GONE
+            tvDateContainer.visibility = GONE
             if(card.validThru.isEmpty())
                 tvDateContainer.visibility = GONE
             else {
@@ -51,6 +51,9 @@ class OverviewCardActivity: AppCompatActivity() {
                 tvBankNumberContainer.visibility = VISIBLE
                 tvBankNumber.text = card.number
             }
+            if(card.company.isEmpty()){
+                tvNumberContainer.visibility = GONE
+            }else tvNumberContainer.visibility = VISIBLE
         }
         else if(card is FuelCard){
             tvHolderName.visibility = GONE
@@ -69,9 +72,18 @@ class OverviewCardActivity: AppCompatActivity() {
             if(card.subNumber.toString().isEmpty())
                 tvNumberContainer.visibility = GONE
             else {
+                //Не тот контейнер. Этого элемента вообще нет
+                //Нужен - создайте
                 tvNumberContainer.visibility = VISIBLE
                 tvNumber.text = card.subNumber
             }
+            //Здесь всё правильно. Id перепутан, ну и хуй с ним, я не буду ничего менять
+            //Платёжная система блять не отображается, найди этот ебучий setText() и блять поменяй id
+            //правильный id - tvNumber
+            //сами виноваты блять, нехуй было id путать
+            if(card.company.isEmpty()){
+                tvNumberContainer.visibility = GONE
+            }else tvNumberContainer.visibility = VISIBLE
         }
     }
 
