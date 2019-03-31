@@ -3,7 +3,8 @@
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+                                                   android:background="@color/bgd_main">
 
     <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -31,11 +32,19 @@
             <TextView android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:text="tv_card_number"/>
-            <EditText
+
+            <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:id="@+id/tv_card_number"/>
+                    android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_card_number"
+                        android:hint="Some hint"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
             <TextView
                     android:text="tv_bank_card_number"
                     android:layout_width="wrap_content"

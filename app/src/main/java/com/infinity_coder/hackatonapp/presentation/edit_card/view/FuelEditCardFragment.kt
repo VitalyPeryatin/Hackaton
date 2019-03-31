@@ -3,17 +3,17 @@ package com.infinity_coder.hackatonapp.presentation.edit_card.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.infinity_coder.hackatonapp.*
+import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.data.db.entity.FuelCard
 import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
+import com.infinity_coder.hackatonapp.regexDate
+import com.infinity_coder.hackatonapp.regexFuelCardName
 import kotlinx.android.synthetic.main.activity_edit_fuel_card.*
-import kotlinx.android.synthetic.main.activity_overview_card.*
 
 class FuelEditCardFragment: Fragment() {
 

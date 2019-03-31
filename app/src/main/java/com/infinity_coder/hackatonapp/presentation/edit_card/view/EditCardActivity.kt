@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.text.TextUtils.replace
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getSystemService
@@ -15,7 +14,6 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions
-import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions.SPARSE_MODEL
 import com.google.firebase.ml.vision.text.FirebaseVisionText
 import com.infinity_coder.hackatonapp.*
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
@@ -24,7 +22,6 @@ import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 
 class EditCardActivity : AppCompatActivity() {
-    val tempRepository = TempRepository
     var cardNumber = ""
     var holderName = ""
     var bankCardNumber = ""
@@ -116,7 +113,7 @@ class EditCardActivity : AppCompatActivity() {
             }
         }
 
-        if (holderName != "") {
+        if (!holderName.isEmpty()) {
             TempRepository.card = BankCard(bankCardNumber, expiringDate, company, holderName, " ", imagePath)
         } else {
             TempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)
@@ -163,36 +160,36 @@ class EditCardActivity : AppCompatActivity() {
                 if (lines[j].text.matches(regexHolderName)) {
                     holderName = (lines[j].text)
                 }
-                if (lines[j].text.replace('b', '6').matches(regexBankCardName)
-                ) {
-                    bankCardNumber = lines[j].text.replace('b', '6')
-                }
-
-                val elements = lines[j].elements
-                for (l in elements.indices) {
-                    if (elements[l].text.replace('S', '5').matches(regexDate)) {
-                        expiringDate = elements[l].text.replace('S', '5')
-                    }
-                    if (elements[l].text.replace('S', '5')
-                            .replace(',', '/')
-                            .contains('/')
+                if (lines[j].text.matches(regexBankCardName)) {
+                    bankCardNumber = (lines[j].text)
+                    if (lines[j].text.replace('b', '6').matches(regexBankCardName)
                     ) {
-                        val slashPos = elements[l].text.indexOf('/')
-                        if (slashPos - 2 >= 0 && slashPos + 3 < elements[l].text.length)
-                            expiringDate = elements[l].text.substring(slashPos - 2, slashPos + 3)
-
-
+                        bankCardNumber = lines[j].text.replace('b', '6')
                     }
-                    when {
-                        elements[l].text == "VISA" -> company = "Visa"
-                        elements[l].text == "MasterCard" -> company = "MasterCard"
-                        elements[l].text == "mastercard" -> company = "MasterCard"
+
+                    val elements = lines[j].elements
+                    for (l in elements.indices) {
+                        if (elements[l].text.replace('S', '5').matches(regexDate)) {
+                            expiringDate = elements[l].text.replace('S', '5')
+                        }
+                        if (elements[l].text.replace('S', '5').contains('/')) {
+                            val slashPos = elements[l].text.indexOf('/')
+                            if (slashPos - 2 >= 0 && slashPos + 3 < lines[j].text.length)
+                                expiringDate = elements[l].text.substring(slashPos - 2, slashPos + 3)
+
+
+                        }
+                        when {
+                            elements[l].text == "VISA" -> company = "Visa"
+                            elements[l].text == "MasterCard" -> company = "MasterCard"
+                            elements[l].text == "mastercard" -> company = "MasterCard"
+                        }
                     }
                 }
             }
         }
 
-        if (holderName != "") {
+        if (!holderName.isEmpty()) {
             TempRepository.card = BankCard(bankCardNumber, expiringDate, company, holderName, " ", imagePath)
         } else {
             TempRepository.card = FuelCard(cardNumber, expiringDate, company, imagePath)

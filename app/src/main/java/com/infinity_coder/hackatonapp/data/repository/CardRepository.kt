@@ -62,6 +62,10 @@ class CardRepository : ICardRepository {
         return mediatorLiveData
     }
 
+    override fun getCardByNumber(number: String): AbstractCard? = runBlocking(Dispatchers.IO) {
+        return@runBlocking cardDao.getBankCardByNumber(number)
+    }
+
     object temp{
 
 
