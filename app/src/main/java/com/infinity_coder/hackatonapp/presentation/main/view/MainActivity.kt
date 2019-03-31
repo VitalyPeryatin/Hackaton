@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.infinity_coder.hackatonapp.R
 import com.infinity_coder.hackatonapp.data.repository.CardRepository
+import com.infinity_coder.hackatonapp.data.repository.TempRepository
 import com.infinity_coder.hackatonapp.domain.ICardRepository
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.edit_card.view.EditCardActivity
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), RecyclerCardAdapter.Listener {
     lateinit var cardRepository: ICardRepository
     override fun onClick(number: String) {
+        TempRepository.card = cardRepository.getCardByNumber(number)!!
         startActivity(Intent(this, OverviewCardActivity::class.java))
     }
 
@@ -29,7 +31,6 @@ class MainActivity : AppCompatActivity(), RecyclerCardAdapter.Listener {
 
         fabAdd.setOnClickListener{
             startActivity(Intent(this, EditCardActivity::class.java))
-
         }
     }
 
