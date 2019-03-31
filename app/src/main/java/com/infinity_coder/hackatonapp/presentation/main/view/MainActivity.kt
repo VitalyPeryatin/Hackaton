@@ -10,7 +10,6 @@ import com.infinity_coder.hackatonapp.domain.ICardRepository
 import com.infinity_coder.hackatonapp.presentation.card_overview.view.OverviewCardActivity
 import com.infinity_coder.hackatonapp.presentation.edit_card.view.EditCardActivity
 import com.infinity_coder.hackatonapp.presentation.main.adapter.RecyclerCardAdapter
-import com.infinity_coder.hackatonapp.presentation.scan.view.ScanActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), RecyclerCardAdapter.Listener {
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity(), RecyclerCardAdapter.Listener {
 
         recyclerCards.layoutManager = GridLayoutManager(this,2)
         cardRepository = CardRepository()
+        //recyclerCards.adapter = RecyclerCardAdapter(this, this, cardRepository.getAdapterCards())
         recyclerCards.adapter = RecyclerCardAdapter(this, this, cardRepository.getAdapterCards())
 
         fabAdd.setOnClickListener{

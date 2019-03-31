@@ -24,4 +24,8 @@ interface CardDao {
     @Query("SELECT * FROM FuelCard WHERE company = :companyName")
     fun getFuelCards(companyName: String) : LiveData<List<FuelCard>>
 
+
+    @Query("SELECT * FROM BankCard")
+    fun getBankCardsList() : List<BankCard>
+
 }

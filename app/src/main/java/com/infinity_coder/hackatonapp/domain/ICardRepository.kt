@@ -15,4 +15,5 @@ interface ICardRepository {
     fun getFuelCard(): LiveData<List<FuelCard>>
     fun getFuelCard(company: String): LiveData<List<FuelCard>>
     fun getAdapterCards():LiveData<List<AbstractCard>>
+    fun getBankCardsList() : List<AbstractCard>
 }

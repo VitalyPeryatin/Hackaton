@@ -22,6 +22,10 @@ class CardRepository : ICardRepository {
         }
     }
 
+    override fun getBankCardsList() : List<BankCard> = runBlocking(Dispatchers.IO){
+        return@runBlocking cardDao.getBankCardsList()
+    }
+
     override fun delete(bankCard: BankCard) = runBlocking(Dispatchers.IO){
         cardDao.delete(bankCard)
     }
