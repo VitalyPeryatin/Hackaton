@@ -23,15 +23,19 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".presentation.main.view.view.MainActivity">
+        <activity android:name=".presentation.main.view.view.MainActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.scan.view.ScanActivity"/>
-        <activity android:name=".presentation.edit_card.view.EditCardActivity"/>
-        <activity android:name=".presentation.card_overview.view.OverviewCardActivity"/>
+        <activity android:name=".presentation.scan.view.ScanActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.edit_card.view.EditCardActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.card_overview.view.OverviewCardActivity"
+                  android:screenOrientation="portrait"/>
     </application>
 </manifest>

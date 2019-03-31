@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:orientation="vertical"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent">
 
@@ -32,48 +31,52 @@
                 android:orientation="vertical">
 
             <TextView
-                    android:text="@string/owner_name"
+                    android:text="Имя держателя карты"
                     android:layout_margin="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView2" android:fontFamily="serif"/>
+                    android:id="@+id/textView2"/>
             <androidx.appcompat.widget.AppCompatEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:id="@+id/tv_holder_name"/>
             <TextView
-                    android:text="@string/bank_num"
+                    android:text="Банковский номер карты"
                     android:layout_width="wrap_content"
                     android:layout_margin="8dp"
-                    android:layout_height="wrap_content" android:id="@+id/textView3" android:fontFamily="serif"/>
+                    android:layout_height="wrap_content" android:id="@+id/textView3"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:id="@+id/tv_bank_card_number"/>
             <TextView
-                    android:text="@string/valid_thru"
+                    android:text="Дата истечения срока действия"
                     android:layout_width="wrap_content"
                     android:layout_margin="8dp"
-                    android:layout_height="wrap_content" android:id="@+id/textView4" android:fontFamily="serif"/>
+                    android:layout_height="wrap_content" android:id="@+id/textView4"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:id="@+id/tv_expiring_date"/>
             <TextView
                     android:text="@string/payment_system"
                     android:layout_margin="8dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:fontFamily="serif"/>
+                    android:layout_height="wrap_content"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:ems="10"
                     android:id="@+id/etCompany"/>
         </LinearLayout>
