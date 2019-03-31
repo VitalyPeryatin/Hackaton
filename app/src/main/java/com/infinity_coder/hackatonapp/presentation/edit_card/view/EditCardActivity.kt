@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions
+import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions.SPARSE_MODEL
 import com.google.firebase.ml.vision.text.FirebaseVisionText
 import com.infinity_coder.hackatonapp.*
 import com.infinity_coder.hackatonapp.data.db.entity.BankCard
@@ -138,7 +139,7 @@ class EditCardActivity : AppCompatActivity() {
         val image = FirebaseVisionImage.fromBitmap(mSelectedImage)
         val recognizer = FirebaseVision.getInstance()
             .cloudTextRecognizer
-        FirebaseVisionCloudTextRecognizerOptions.Builder().setLanguageHints(listOf("en")).build()
+        FirebaseVisionCloudTextRecognizerOptions.Builder().setLanguageHints(listOf("en")).setModelType(SPARSE_MODEL).build()
         recognizer.processImage(image)
             .addOnSuccessListener { texts ->
                 processCloudTextRecognitionResult(texts)
@@ -177,7 +178,7 @@ class EditCardActivity : AppCompatActivity() {
                             .contains('/')
                     ) {
                         val slashPos = elements[l].text.indexOf('/')
-                        if (slashPos - 2 >= 0 && slashPos + 3 < lines[j].text.length)
+                        if (slashPos - 2 >= 0 && slashPos + 3 < elements[l].text.length)
                             expiringDate = elements[l].text.substring(slashPos - 2, slashPos + 3)
 
 
