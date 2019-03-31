@@ -23,6 +23,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
         <LinearLayout
+                android:padding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" app:layout_constraintTop_toBottomOf="@+id/toolbar"
                 app:layout_constraintStart_toStartOf="parent"
@@ -31,40 +32,48 @@
                 android:orientation="vertical">
 
             <TextView
-                    android:text="Имя держателя карты"
+                    android:text="@string/owner_name"
+                    android:layout_margin="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView2"/>
+                    android:id="@+id/textView2" android:fontFamily="serif"/>
             <androidx.appcompat.widget.AppCompatEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:layout_margin="8dp"
                     android:id="@+id/tv_holder_name"/>
             <TextView
-                    android:text="Банковский номер карты"
+                    android:text="@string/bank_num"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView3"/>
+                    android:layout_margin="8dp"
+                    android:layout_height="wrap_content" android:id="@+id/textView3" android:fontFamily="serif"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:layout_margin="8dp"
                     android:id="@+id/tv_bank_card_number"/>
             <TextView
-                    android:text="Дата истечения срока действия"
+                    android:text="@string/valid_thru"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView4"/>
+                    android:layout_margin="8dp"
+                    android:layout_height="wrap_content" android:id="@+id/textView4" android:fontFamily="serif"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:layout_margin="8dp"
                     android:id="@+id/tv_expiring_date"/>
             <TextView
-                    android:text="Платежная система"
+                    android:text="@string/payment_system"
+                    android:layout_margin="8dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" android:fontFamily="serif"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:ems="10"
                     android:id="@+id/etCompany"/>
         </LinearLayout>

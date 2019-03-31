@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Card Holder</string>
     <string name="descriptionCard">Карта</string>
+    <string name="card_number">Номер карты</string>
+    <string name="bank_num">Банковский номер карты</string>
+    <string name="valid_thru">Дата истечения срока действия</string>
+    <string name="payment_system">Платежная система</string>
+    <string name="owner_name">Имя держателя карты</string>
 </resources>
